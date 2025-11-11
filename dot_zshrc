@@ -74,9 +74,7 @@ function y() {
 # Misc. aliases
 alias lg='lazygit'
 
-# Bare git repository for managing dotfiles
-alias config='/usr/bin/git --git-dir="$HOME/.cfg" --work-tree="$HOME"'
-alias lgcfg='lazygit -g "$HOME/.cfg" -w "$HOME"'
+alias lgcfg='lazygit -p "$HOME/.local/share/chezmoi"'
 
 
 
