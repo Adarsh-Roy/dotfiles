@@ -1,0 +1,338 @@
+{
+  "actions" : [
+    {
+      "actions" : [
+        {
+          "key" : "w",
+          "type" : "application",
+          "value" : "/Applications/WezTerm.app"
+        },
+        {
+          "key" : "p",
+          "type" : "application",
+          "value" : "/Applications/PyCharm.app"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "a",
+              "type" : "application",
+              "value" : "/Applications/Arc.app"
+            },
+            {
+              "key" : "s",
+              "type" : "application",
+              "value" : "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+            },
+            {
+              "key" : "c",
+              "type" : "application",
+              "value" : "/Applications/Google Chrome.app"
+            }
+          ],
+          "key" : "b",
+          "label" : "Browsers",
+          "type" : "group"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "s",
+              "type" : "application",
+              "value" : "/Applications/Slack.app"
+            },
+            {
+              "key" : "m",
+              "type" : "application",
+              "value" : "/System/Applications/Mail.app"
+            },
+            {
+              "key" : "d",
+              "type" : "application",
+              "value" : "/Applications/Discord.app"
+            },
+            {
+              "key" : "w",
+              "type" : "application",
+              "value" : "/Applications/WhatsApp.app"
+            },
+            {
+              "key" : "a",
+              "type" : "application",
+              "value" : "/Applications/Asana.app"
+            }
+          ],
+          "key" : "c",
+          "label" : "Communication",
+          "type" : "group"
+        },
+        {
+          "key" : "d",
+          "type" : "application",
+          "value" : "/Applications/DataGrip.app"
+        },
+        {
+          "key" : "P",
+          "type" : "application",
+          "value" : "/Applications/Postman.app"
+        },
+        {
+          "key" : "z",
+          "type" : "application",
+          "value" : "/Applications/zoom.us.app"
+        },
+        {
+          "key" : "o",
+          "type" : "application",
+          "value" : "/Applications/Obsidian.app"
+        },
+        {
+          "key" : "f",
+          "type" : "application",
+          "value" : "/System/Library/CoreServices/Finder.app"
+        },
+        {
+          "key" : "n",
+          "type" : "application",
+          "value" : "/Applications/Numbers.app"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "c",
+              "label" : "Chatgpt",
+              "type" : "application",
+              "value" : "/Users/adarsh/Applications/ChatGPT.app"
+            }
+          ],
+          "key" : "a",
+          "label" : "AI",
+          "type" : "group"
+        }
+      ],
+      "key" : "o",
+      "label" : "Open (Apps)",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "f",
+          "label" : "Fullscreen",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/window-management/toggle-fullscreen"
+        },
+        {
+          "key" : "h",
+          "label" : "Left Half",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/window-management/left-half"
+        },
+        {
+          "key" : "l",
+          "label" : "Right Half",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/window-management/right-half"
+        },
+        {
+          "key" : "m",
+          "label" : "Maximize",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/window-management/maximize"
+        }
+      ],
+      "key" : "w",
+      "label" : "Window",
+      "type" : "group"
+    },
+    {
+      "key" : "c",
+      "label" : "Clipboard",
+      "type" : "url",
+      "value" : "raycast://extensions/raycast/clipboard-history/clipboard-history"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "j",
+          "label" : "JSON Format",
+          "type" : "url",
+          "value" : "raycast://extensions/destiner/json-format/index"
+        },
+        {
+          "key" : "J",
+          "label" : "JWT Decode",
+          "type" : "url",
+          "value" : "raycast://extensions/gdsmith/jwt-decoder/jwt-view"
+        }
+      ],
+      "key" : "e",
+      "label" : "Extensions",
+      "type" : "group"
+    },
+    {
+      "key" : "d",
+      "label" : "Date Converter",
+      "type" : "url",
+      "value" : "raycast://extensions/asportnoy/date-converter/index"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "o",
+          "type" : "application",
+          "value" : "/Applications/Spotify.app"
+        },
+        {
+          "key" : "l",
+          "label" : "Next",
+          "type" : "url",
+          "value" : "raycast://extensions/mattisssa/spotify-player/next"
+        },
+        {
+          "key" : "h",
+          "label" : "Previous",
+          "type" : "url",
+          "value" : "raycast://extensions/mattisssa/spotify-player/previous"
+        },
+        {
+          "key" : "space",
+          "label" : "Toggle Play/Pause",
+          "type" : "url",
+          "value" : "raycast://extensions/mattisssa/spotify-player/togglePlayPause"
+        },
+        {
+          "key" : "f",
+          "label" : "Find",
+          "type" : "url",
+          "value" : "raycast://extensions/mattisssa/spotify-player/search"
+        },
+        {
+          "key" : "r",
+          "label" : "Repeat Cycle",
+          "type" : "url",
+          "value" : "raycast://extensions/mattisssa/spotify-player/cycleRepeat"
+        },
+        {
+          "key" : "s",
+          "label" : "Shuffle",
+          "type" : "url",
+          "value" : "raycast://extensions/mattisssa/spotify-player/toggleShuffle"
+        }
+      ],
+      "key" : "s",
+      "label" : "Spotify",
+      "type" : "group"
+    },
+    {
+      "key" : "S",
+      "label" : "Search Snippets",
+      "type" : "url",
+      "value" : "raycast://extensions/raycast/snippets/search-snippets"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "b",
+          "label" : "Bluetooth",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/system/toggle-bluetooth"
+        },
+        {
+          "key" : "r",
+          "label" : "OBS Recording",
+          "type" : "url",
+          "value" : "raycast://extensions/Yukai/obs-control/toggle-recording"
+        },
+        {
+          "key" : "a",
+          "label" : "Aerospace",
+          "type" : "command",
+          "value" : "/opt/homebrew/bin/aerospace enable toggle"
+        }
+      ],
+      "key" : "t",
+      "label" : "Toggle",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "d",
+          "type" : "folder",
+          "value" : "/Users/adarsh/Downloads"
+        },
+        {
+          "key" : "D",
+          "type" : "folder",
+          "value" : "/Users/adarsh/Desktop"
+        },
+        {
+          "key" : "m",
+          "type" : "folder",
+          "value" : "/Users/adarsh/Movies"
+        }
+      ],
+      "key" : "f",
+      "label" : "Finder",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "i",
+          "label" : "Internal",
+          "type" : "command",
+          "value" : "/Library/Application\\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli --select-profile \"Internal Keyboard\" && osascript -e 'if application \"Mouseless\" is running then tell application \"Mouseless\" to quit'"
+        },
+        {
+          "key" : "e",
+          "type" : "command",
+          "value" : "/Library/Application\\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli --select-profile \"External Keyboard\" && open -ga \"Mouseless\""
+        }
+      ],
+      "key" : "k",
+      "label" : "Keyboard",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "t",
+          "label" : "Text",
+          "type" : "url",
+          "value" : "raycast://extensions/huzef44/screenocr/recognize-text"
+        },
+        {
+          "key" : "i",
+          "label" : "Image",
+          "type" : "url",
+          "value" : "raycast://extensions/Aayush9029/screenshot/capture-to-clipboard"
+        }
+      ],
+      "key" : "x",
+      "label" : "Capture",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "n",
+          "label" : "New Note",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/raycast-notes/create-note"
+        },
+        {
+          "key" : "t",
+          "label" : "Toggle Notes",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/raycast-notes/raycast-notes"
+        }
+      ],
+      "key" : "n",
+      "label" : "Notes",
+      "type" : "group"
+    }
+  ],
+  "type" : "group"
+}
