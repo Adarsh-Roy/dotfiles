@@ -74,7 +74,7 @@ function y() {
 # Misc. aliases
 alias lg='lazygit'
 
-alias lgcfg='lazygit -p "$HOME/.local/share/chezmoi"'
+alias lgc='lazygit -p "$HOME/.local/share/chezmoi"'
 
 
 
