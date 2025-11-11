@@ -1,0 +1,12 @@
+git:
+  paging:
+    colorArg: "always"
+    pager: "delta --dark --paging=never --side-by-side --line-numbers"
+  autoFetch: true
+  autoRefresh: true
+  parseEmoji: true
+  disableForcePushing: false
+
+updates:
+  # don't annoy you
+  checkForUpdates: false

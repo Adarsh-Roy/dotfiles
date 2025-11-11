@@ -1,0 +1,64 @@
+# eseential to switch
+- [x] quitting when there's unsaved changes should go buffer to buffer asking save/discard/cancel
+- [x] make qa! functioning
+- [x] use different mappings for diffview, it should not conflict with code actions
+- [x] DF COMMON INSTALLATION IS NOT WORKING WITH THE LSP
+- [x] preview, mainly typst, but other things as well
+- [x] icons for diagnostics in the column
+- [x] line floating diagnostics
+- [x] oil <C-v> should be vertical split, and <C-s> should be save
+- [x] remove lazy notif everytime
+- [x] bufline, with H, L keymaps
+- [x] color of current line should be different
+- [x] luasnip
+- [x] current line number highlighted
+- [x] mini QOL
+    - [x] ai
+    - [x] surround
+    - [x] operators
+- [x] which-key on the side instead of bottom
+- [x] snacks picker in ivy mode from the bottom
+- [x] inline diagnostics
+- [x] statusline
+- [x] command to exit out of oil
+- [x] grug far
+- [x] make normal search smart, all lower case matches everything, mixed matches case wise
+- [x] search references
+- [x] fix notifications, not saved one is not showing up above, see how lazyvim does it
+- [x] how many lines are visually selected currently
+- [x] sessions
+- [x] fatal error when it's not part of any git repo, it should just not be visible in that case
+- [x] lazygit floating window should take up the entire space
+- [x] recording macro should have feed back in the statusline
+- [x] move commands
+- [ ] file search should respect obsidian aliases/ or just redo the whole notes things without obsidian
+- [ ] <C-backsapce> shoud be mapped to deleting word in insert mode.
+    see how lazyvim does it
+# long term
+- [x] close all other buffer
+- [x] ruff python conform
+- [x] snack QOL (explort in depth)
+- [x] the name of the file first, then the path in picker
+- [x] todo highlights
+- [x] new buffer key map
+- [x] be able to copy the diagnostic from the floating window
+- [ ] fix the bug where it sometimes shows the dialogue box even though no terminal buffers are
+open
+- [ ] figure out how to fuzzy find with glob patterns, sub directories etc
+- [ ] neovim terminal flow (for gf etc, persistent terminal, etc)
+- [ ] optimize startup time by plugin lazying etc
+- [ ] arrow/harpoon
+- [ ] octo
+- [ ] increase height of ivy
+- [ ] diffview
+    - [ ] how to merge all non conflicting ones ? -> they are already merged, find out how to not
+    - [ ] how to make it so that ours, local, theirs is always visible
+    - [ ] how to customize the default window sizes
+- [ ] typst snippets, like center align, etc
+- [ ] markdown headers should fold
+- [ ] more obsidian keymaps
+- [ ] better gutter icons
+- [ ] jump to next diagnostic with ]x instead of ]d to make things consistent
+- [ ] dial.nvim
+- [ ] where is the mapping <Space>gO coming from ?
+- [ ] dabble around with ruff as an lsp on top of the other lsp
