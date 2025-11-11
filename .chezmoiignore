@@ -1,1 +1,4 @@
-{{ if ne .chezmoi.os "linux" }} dot_config/hypr {{ end }}
+{{- if ne .chezmoi.os "linux" }}
+dot_config/hypr
+.config/hypr
+{{- end }}
