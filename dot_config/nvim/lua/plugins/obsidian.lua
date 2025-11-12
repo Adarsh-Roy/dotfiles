@@ -9,7 +9,9 @@ return {
 	config = function()
 		local obsi = require("obsidian")
 		obsi.setup({
-			disable_frontmatter = true,
+			frontmatter = {
+				enabled = false,
+			},
 			note_id_func = function(title)
 				-- If no title was given, fall back to a timestamp to avoid empty names.
 				if not title or title == "" then
@@ -22,9 +24,9 @@ return {
 			legacy_commands = false,
 			notes_subdir = "notes",
 			workspaces = {
-				{ name = "dragonfruit", path = "~/Obsidian/Dragonfruit/DragonfruitVault/" },
+				{ name = "dragonfruit",  path = "~/Obsidian/Dragonfruit/DragonfruitVault/" },
 				{ name = "professional", path = "~/Obsidian/Professional/ObsidianProfessionalVault/" },
-				{ name = "pengvim", path = "~/Personal/Pengvim/PengvimVault/" },
+				{ name = "pengvim",      path = "~/Personal/Pengvim/PengvimVault/" },
 			},
 		})
 		vim.api.nvim_create_autocmd("FileType", {

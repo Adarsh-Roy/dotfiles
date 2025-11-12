@@ -117,7 +117,7 @@
     {
       "actions" : [
         {
-          "key" : "f",
+          "key" : "F",
           "label" : "Fullscreen",
           "type" : "url",
           "value" : "raycast://extensions/raycast/window-management/toggle-fullscreen"
@@ -139,6 +139,12 @@
           "label" : "Maximize",
           "type" : "url",
           "value" : "raycast://extensions/raycast/window-management/maximize"
+        },
+        {
+          "key" : "f",
+          "label" : "Floating Toggle",
+          "type" : "command",
+          "value" : "/opt/homebrew/bin/aerospace layout floating tiling"
         }
       ],
       "key" : "w",

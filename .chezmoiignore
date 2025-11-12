@@ -2,3 +2,5 @@
 dot_config/hypr
 .config/hypr
 {{- end }}
+
+TODO.md

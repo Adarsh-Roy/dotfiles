@@ -1,0 +1,1 @@
+- [ ] add wezterm keymap for switching back and forth between workspaces, and tabs
