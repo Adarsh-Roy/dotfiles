@@ -14,7 +14,14 @@ return { {
 				['<C-s>'] = '<cmd>w<cr>',
 				["<C-v>"] = { "actions.select", opts = { vertical = true } },
 				["+"] = { "actions.close", mode = "n" }
-			}
+			},
+			float = {
+				border = "rounded", -- "none" | "single" | "double" | "rounded" | "solid" | "shadow"
+				padding = 2,    -- optional, looks nicer with a border
+				max_width = 0,  -- 0 = auto
+				max_height = 0,
+				win_options = { winblend = 0 },
+			},
 		})
 	end,
 } }
