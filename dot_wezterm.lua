@@ -182,9 +182,9 @@ local function setup_keys(cfg)
 
 	-- Leader key
 	if wezterm.target_triple:find("apple%-darwin") then
-		cfg.leader = { key = "g", mods = "CMD", timeout_milliseconds = 2000 }
+		cfg.leader = { key = "d", mods = "CMD", timeout_milliseconds = 2000 }
 	else
-		cfg.leader = { key = "g", mods = "CTRL", timeout_milliseconds = 2000 }
+		cfg.leader = { key = "d", mods = "CTRL", timeout_milliseconds = 2000 }
 	end
 
 	-- Define key mappings (removed multi-key bindings that used invalid strings)

@@ -8,9 +8,9 @@
           "value" : "/Applications/WezTerm.app"
         },
         {
-          "key" : "p",
+          "key" : "P",
           "type" : "application",
-          "value" : "/Applications/PyCharm.app"
+          "value" : "/Applications/PyCharm CE.app"
         },
         {
           "actions" : [
@@ -72,7 +72,7 @@
           "value" : "/Applications/DataGrip.app"
         },
         {
-          "key" : "P",
+          "key" : "p",
           "type" : "application",
           "value" : "/Applications/Postman.app"
         },
