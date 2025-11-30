@@ -1,6 +1,34 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+-- Helper functions for workspace switching with history tracking
+local function switch_workspace(window, pane, workspace)
+	local current_workspace = window:active_workspace()
+	if current_workspace == workspace then
+		return
+	end
+
+	window:perform_action(
+		wezterm.action.SwitchToWorkspace({
+			name = workspace,
+		}),
+		pane
+	)
+
+	wezterm.GLOBAL.previous_workspace = current_workspace
+end
+
+local function switch_to_previous_workspace(window, pane)
+	local current_workspace = window:active_workspace()
+	local workspace = wezterm.GLOBAL.previous_workspace
+
+	if current_workspace == workspace or wezterm.GLOBAL.previous_workspace == nil then
+		return
+	end
+
+	switch_workspace(window, pane, workspace)
+end
+
 local function setup_font(cfg)
 	cfg.font = wezterm.font_with_fallback({
 		"Maple Mono NF",
@@ -187,7 +215,7 @@ local function setup_keys(cfg)
 		cfg.leader = { key = "d", mods = "CTRL", timeout_milliseconds = 2000 }
 	end
 
-	-- Define key mappings (removed multi-key bindings that used invalid strings)
+	-- Define key mappings
 	local key_maps = {
 		{ key = " ",          mods = "LEADER", action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' } },
 		{ key = "n",          mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
@@ -204,6 +232,14 @@ local function setup_keys(cfg)
 		{ key = "RightArrow", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
 		{ key = "UpArrow",    mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
 		{ key = "DownArrow",  mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
+		-- Toggle between current and previous workspace
+		{
+			key = "Tab",
+			mods = "LEADER",
+			action = wezterm.action_callback(function(window, pane)
+				switch_to_previous_workspace(window, pane)
+			end),
+		},
 		-- create a new named workspace
 		{
 			key = "N",
@@ -220,7 +256,6 @@ local function setup_keys(cfg)
 				end),
 			},
 		},
-
 		-- rename current workspace
 		{
 			key = "R",
@@ -274,15 +309,28 @@ local function setup_keys(cfg)
 	table.insert(cfg.keys, { key = "f", mods = "LEADER", action = wezterm.action.ResetFontSize })
 
 	-- Define key tables for multi-key sequences.
-	-- The "workspace" table handles workspace switching.
-	-- For the three-key sequence (leader + w + t + s), we nest another key table.
 	-- Apple configuration
 	if wezterm.target_triple:find("apple%-darwin") then
 		cfg.key_tables = {
 			workspace = {
-				{ key = "b", action = wezterm.action.SwitchToWorkspace({ name = "df-services" }) },
-				{ key = "c", action = wezterm.action.SwitchToWorkspace({ name = "df-common" }) },
-				{ key = "f", action = wezterm.action.SwitchToWorkspace({ name = "df-client" }) },
+				{
+					key = "b",
+					action = wezterm.action_callback(function(window, pane)
+						switch_workspace(window, pane, "df-services")
+					end),
+				},
+				{
+					key = "c",
+					action = wezterm.action_callback(function(window, pane)
+						switch_workspace(window, pane, "df-common")
+					end),
+				},
+				{
+					key = "f",
+					action = wezterm.action_callback(function(window, pane)
+						switch_workspace(window, pane, "df-client")
+					end),
+				},
 				{
 					key = "t",
 					action = wezterm.action.ActivateKeyTable({
@@ -307,17 +355,42 @@ local function setup_keys(cfg)
 				{ key = "Escape", action = wezterm.action.PopKeyTable },
 			},
 			workspace_transport = {
-				{ key = "s",      action = wezterm.action.SwitchToWorkspace({ name = "transport-service" }) },
+				{
+					key = "s",
+					action = wezterm.action_callback(function(window, pane)
+						switch_workspace(window, pane, "transport-service")
+					end),
+				},
 				{ key = "Escape", action = wezterm.action.PopKeyTable },
 			},
 			workspace_notes = {
-				{ key = "d",      action = wezterm.action.SwitchToWorkspace({ name = "notes-dragonfruit" }) },
-				{ key = "p",      action = wezterm.action.SwitchToWorkspace({ name = "notes-professional" }) },
+				{
+					key = "d",
+					action = wezterm.action_callback(function(window, pane)
+						switch_workspace(window, pane, "notes-dragonfruit")
+					end),
+				},
+				{
+					key = "p",
+					action = wezterm.action_callback(function(window, pane)
+						switch_workspace(window, pane, "notes-professional")
+					end),
+				},
 				{ key = "Escape", action = wezterm.action.PopKeyTable },
 			},
 			workspace_ml = {
-				{ key = "s",      action = wezterm.action.SwitchToWorkspace({ name = "ml-scripts" }) },
-				{ key = "v",      action = wezterm.action.SwitchToWorkspace({ name = "ml-validation-tools" }) },
+				{
+					key = "s",
+					action = wezterm.action_callback(function(window, pane)
+						switch_workspace(window, pane, "ml-scripts")
+					end),
+				},
+				{
+					key = "v",
+					action = wezterm.action_callback(function(window, pane)
+						switch_workspace(window, pane, "ml-validation-tools")
+					end),
+				},
 				{ key = "Escape", action = wezterm.action.PopKeyTable },
 			},
 		}
@@ -328,12 +401,16 @@ local function setup_keys(cfg)
 	for i = 1, 4 do
 		table.insert(cfg.key_tables.workspace, {
 			key = tostring(i),
-			action = wezterm.action.SwitchToWorkspace({ name = "WS" .. tostring(i) }),
+			action = wezterm.action_callback(function(window, pane)
+				switch_workspace(window, pane, "WS" .. tostring(i))
+			end),
 		})
 	end
 	table.insert(cfg.key_tables.workspace, {
 		key = "d",
-		action = wezterm.action.SwitchToWorkspace({ name = "default" }),
+		action = wezterm.action_callback(function(window, pane)
+			switch_workspace(window, pane, "default")
+		end),
 	})
 end
 

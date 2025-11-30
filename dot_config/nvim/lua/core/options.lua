@@ -11,8 +11,7 @@ vim.o.cursorlineopt = "number"
 vim.o.confirm = true
 
 -- Fold
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldmethod = "indent"
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true

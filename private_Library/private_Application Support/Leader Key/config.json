@@ -145,6 +145,30 @@
           "label" : "Floating Toggle",
           "type" : "command",
           "value" : "/opt/homebrew/bin/aerospace layout floating tiling"
+        },
+        {
+          "key" : "H",
+          "label" : "Join Left",
+          "type" : "command",
+          "value" : "/opt/homebrew/bin/aerospace join-with left"
+        },
+        {
+          "key" : "J",
+          "label" : "Join Down",
+          "type" : "command",
+          "value" : "/opt/homebrew/bin/aerospace join-with down"
+        },
+        {
+          "key" : "K",
+          "label" : "Join Up",
+          "type" : "command",
+          "value" : "/opt/homebrew/bin/aerospace join-with up"
+        },
+        {
+          "key" : "L",
+          "label" : "Join Right",
+          "type" : "command",
+          "value" : "/opt/homebrew/bin/aerospace join-with right"
         }
       ],
       "key" : "w",
@@ -186,6 +210,7 @@
       "actions" : [
         {
           "key" : "o",
+          "label" : "Spotify",
           "type" : "application",
           "value" : "/Applications/Spotify.app"
         },
