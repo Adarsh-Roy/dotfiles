@@ -363,6 +363,19 @@
       "key" : "n",
       "label" : "Notes",
       "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "s",
+          "label" : "Speaker",
+          "type" : "command",
+          "value" : "afplay /System/Library/Sounds/Blow.aiff"
+        }
+      ],
+      "key" : "T",
+      "label" : "Test",
+      "type" : "group"
     }
   ],
   "type" : "group"
