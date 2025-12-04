@@ -36,7 +36,11 @@ return {
 				lua = { "stylua" },
 				python = { "ruff_fix", "ruff_format" },
 				rust = { "rustfmt" },
-				json = { "prettier" }
+				javascript = { "prettierd", "prettier" },
+				typescript = { "prettierd", "prettier" },
+				javascriptreact = { "prettierd", "prettier" },
+				typescriptreact = { "prettierd", "prettier" }, -- TSX
+				json = { "prettierd", "prettier" },
 			},
 		},
 	},
