@@ -30,7 +30,14 @@ return {
 			preset = 'default',
 			['<C-e>'] = {},
 		},
-		completion = { documentation = { auto_show = true } },
+		completion = {
+			documentation = {
+				auto_show = true,
+				window = {
+					border = "rounded"
+				}
+			}
+		},
 		signature = { enabled = true },
 
 		-- Default list of enabled providers defined so that you can extend it

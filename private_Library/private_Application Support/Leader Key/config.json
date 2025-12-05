@@ -108,6 +108,11 @@
           "key" : "a",
           "label" : "AI",
           "type" : "group"
+        },
+        {
+          "key" : "s",
+          "type" : "application",
+          "value" : "/System/Applications/System Settings.app"
         }
       ],
       "key" : "o",
@@ -280,6 +285,12 @@
           "label" : "Aerospace",
           "type" : "command",
           "value" : "/opt/homebrew/bin/aerospace enable toggle"
+        },
+        {
+          "key" : "d",
+          "label" : "Desktop Icons",
+          "type" : "command",
+          "value" : "zsh -lic toggledesktopicons"
         }
       ],
       "key" : "t",

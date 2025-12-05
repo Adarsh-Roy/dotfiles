@@ -41,47 +41,57 @@ end
 
 local function setup_colors(cfg)
 	cfg.colors = {
-		foreground = "#CBE0F0",
-		background = "#011423",
-		cursor_bg = "#47FF9C",
+		-- Base UI colors
+		foreground = "#DCDFE4",
+		background = "#000000",
+		cursor_bg = "#47FF9C", -- keep your neon cursor
 		cursor_border = "#47FF9C",
-		cursor_fg = "#011423",
-		selection_bg = "#033259",
-		selection_fg = "#CBE0F0",
+		cursor_fg = "#000000",
+
+		-- Selection: dark grey background, light text
+		selection_bg = "#3A3F4B",
+		selection_fg = "#DCDFE4",
+
+		-- One Half Black ANSI palette
 		ansi = {
-			"#214969",
-			"#E52E2E",
-			"#44FFB1",
-			"#FFE073",
-			"#0FC5ED",
-			"#A277FF",
-			"#24EAF7",
-			"#24EAF7",
+			"#282C34", -- black
+			"#E06C75", -- red
+			"#98C379", -- green
+			"#E5C07B", -- yellow
+			"#61AFEF", -- blue
+			"#C678DD", -- magenta
+			"#56B6C2", -- cyan
+			"#DCDFE4", -- white
 		},
 		brights = {
-			"#214969",
-			"#E52E2E",
-			"#44FFB1",
-			"#FFE073",
-			"#A277FF",
-			"#A277FF",
-			"#24EAF7",
-			"#24EAF7",
+			"#282C34", -- bright black
+			"#E06C75", -- bright red
+			"#98C379", -- bright green
+			"#E5C07B", -- bright yellow
+			"#61AFEF", -- bright blue
+			"#C678DD", -- bright magenta
+			"#56B6C2", -- bright cyan
+			"#DCDFE4", -- bright white
 		},
+
+		-- Tab bar tuned for a black theme
 		tab_bar = {
-			background = "#011423",
+			background = "#000000",
+
 			active_tab = {
-				bg_color = "#033259",
-				fg_color = "#CBE0F0",
+				bg_color = "#282C34",
+				fg_color = "#DCDFE4",
 				intensity = "Bold",
 			},
+
 			inactive_tab = {
-				bg_color = "#011423",
+				bg_color = "#000000",
 				fg_color = "#666666",
 			},
+
 			inactive_tab_hover = {
-				bg_color = "#022233",
-				fg_color = "#CBE0F0",
+				bg_color = "#282C34",
+				fg_color = "#FFFFFF",
 				italic = true,
 			},
 		},

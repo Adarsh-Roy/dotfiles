@@ -94,3 +94,21 @@ bindkey -v
 bindkey -M viins '^E' edit-command-line
 bindkey -M vicmd '^E' edit-command-line
 bindkey -M viins '^R' history-incremental-search-backward
+
+# Toggle desktop icons
+toggledesktopicons() {
+    # Get the current state: returns 0 if true (showing icons), 1 if false (hiding icons)
+    local currentState=$(defaults read com.apple.finder CreateDesktop 2>/dev/null)
+
+    if [ "$currentState" = "false" ]; then
+        # If currently false, set to true
+        defaults write com.apple.finder CreateDesktop true
+        echo "Desktop icons shown."
+    else
+        # If currently true (or anything else), set to false
+        defaults write com.apple.finder CreateDesktop false
+        echo "Desktop icons hidden."
+    fi
+    # Restart Finder to apply changes
+    killall Finder
+}
