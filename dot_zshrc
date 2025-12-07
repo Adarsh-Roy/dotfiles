@@ -54,6 +54,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Neovim
 alias n='nvim'
+alias nz='n ~/.zshrc'
 alias nlazy='NVIM_APPNAME=nvim-lazy nvim'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -112,3 +113,7 @@ toggledesktopicons() {
     # Restart Finder to apply changes
     killall Finder
 }
+
+
+# demo db for lazysql
+alias dbd='lazysql "sqlite:///Users/adarsh/Personal/Pengvim/demo_database.db"'
