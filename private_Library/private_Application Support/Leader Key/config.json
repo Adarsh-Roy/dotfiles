@@ -103,6 +103,12 @@
               "label" : "Chatgpt",
               "type" : "application",
               "value" : "/Users/adarsh/Applications/ChatGPT.app"
+            },
+            {
+              "key" : "g",
+              "label" : "Gemini",
+              "type" : "application",
+              "value" : "/Users/adarsh/Applications/Gemini.app"
             }
           ],
           "key" : "a",

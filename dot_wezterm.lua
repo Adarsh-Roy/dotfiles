@@ -42,7 +42,7 @@ end
 local function setup_colors(cfg)
 	cfg.colors = {
 		foreground = "#CBE0F0",
-		background = "#011423",
+		background = "#000000",
 		cursor_bg = "#47FF9C",
 		cursor_border = "#47FF9C",
 		cursor_fg = "#011423",

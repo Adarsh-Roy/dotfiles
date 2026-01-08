@@ -34,6 +34,35 @@ vim.keymap.set("n", "<leader>fyf", function()
 	vim.fn.setreg("+", name)
 	vim.notify("Yanked (filename): " .. name)
 end, { desc = "Yank filename only" })
+vim.keymap.set({ "n", "v" }, "<leader>fyl", function()
+	local rel = vim.fn.fnamemodify(buf_abs(), ":.")
+	local result = ""
+
+	-- Check if we are in visual mode (v, V, or ^V)
+	local mode = vim.api.nvim_get_mode().mode
+	if mode:match("^[vV\22]") then
+		-- Get the start of the selection ('v') and the current cursor ('.')
+		local line_start = vim.fn.line("v")
+		local line_end = vim.fn.line(".")
+
+		-- Sort lines in case user selected upwards
+		if line_start > line_end then
+			line_start, line_end = line_end, line_start
+		end
+
+		result = string.format("%s:L%d-L%d", rel, line_start, line_end)
+
+		-- Optional: Exit visual mode after yanking (mimics standard yank behavior)
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+	else
+		-- Normal mode: Just the current line
+		local line = vim.fn.line(".")
+		result = string.format("%s:L%d", rel, line)
+	end
+
+	vim.fn.setreg("+", result)
+	vim.notify("Yanked (loc): " .. result)
+end, { desc = "Yank relative path with line number/range" })
 
 -- reselect after increment or decrement in visual mode
 vim.keymap.set("x", "<C-a>", "<C-a>gv")
@@ -116,7 +145,7 @@ local function move_and_record_jump(dest, is_visual)
 	-- 4) Create jumplist entries: jump to dest (`[), then back to original line
 	local prev_lazy = vim.go.lazyredraw
 	vim.go.lazyredraw = true
-	pcall(vim.cmd, "normal! `[") -- start of changed text (destination)
+	pcall(vim.cmd, "normal! `[")                     -- start of changed text (destination)
 	pcall(vim.cmd, ("normal! %dG"):format(view.lnum)) -- back to original line (records a jump)
 	vim.go.lazyredraw = prev_lazy
 	-- 5) Restore exact column/scroll (doesn't touch the jumplist)
@@ -180,7 +209,7 @@ if not vim.g._quit_guard_loaded then
 	local function write_quit_all_guarded(force)
 		if not force and any_terminals_open() then
 			local choice =
-				vim.fn.confirm("Terminal buffers are open. Write all and quit?", "&Write & Quit all\n&Cancel", 2)
+					vim.fn.confirm("Terminal buffers are open. Write all and quit?", "&Write & Quit all\n&Cancel", 2)
 			if choice ~= 1 then
 				vim.notify("Cancelled write-quit: terminal buffers are open.", vim.log.levels.INFO)
 				return

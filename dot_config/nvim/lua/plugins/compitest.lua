@@ -7,6 +7,10 @@ return {
 			testcases_use_single_file = true,
 			open_received_problems = true,
 			open_received_contests = true,
+			received_files_extension = "py",
+			template_file = {
+				py = "/Users/adarsh/Developer/CP/template.py"
+			}
 		})
 	end,
 	keys = {

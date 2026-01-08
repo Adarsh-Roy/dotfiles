@@ -68,6 +68,10 @@ return {
 					ANALYTICS_POSTGRES_USERNAME = getenv("ANALYTICS_POSTGRES_USERNAME_LOCAL"),
 					ANALYTICS_POSTGRES_PASSWORD = getenv("ANALYTICS_POSTGRES_PASSWORD_LOCAL"),
 					FLASK_ENV                   = "development",
+					RABBITMQ_USERNAME           = getenv("RABBITMQ_USERNAME"),
+					RABBITMQ_PASSWORD           = getenv("RABBITMQ_PASSWORD"),
+					RABBITMQ_HOST               = getenv("RABBITMQ_HOST"),
+					RABBITMQ_PORT               = getenv("RABBITMQ_PORT")
 				},
 				args = { "run", "--no-debugger", "--no-reload" },
 				justMyCode = true,

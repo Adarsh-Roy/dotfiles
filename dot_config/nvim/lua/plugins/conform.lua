@@ -36,6 +36,7 @@ return {
 				lua = { "stylua" },
 				python = { "ruff_fix", "ruff_format" },
 				rust = { "rustfmt" },
+				html = { "prettier" },
 				javascript = { "prettierd", "prettier" },
 				typescript = { "prettierd", "prettier" },
 				javascriptreact = { "prettierd", "prettier" },
