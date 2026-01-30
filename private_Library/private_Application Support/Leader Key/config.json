@@ -393,6 +393,25 @@
       "key" : "T",
       "label" : "Test",
       "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "a",
+          "label" : "AeroSpace",
+          "type" : "command",
+          "value" : "pkill -9 -f \"AeroSpace\"; sleep 1; open -a \"AeroSpace\""
+        },
+        {
+          "key" : "t",
+          "label" : "Thock",
+          "type" : "command",
+          "value" : "pkill -9 -f \"Thock\"; sleep 1; open -a \"Thock\""
+        }
+      ],
+      "key" : "r",
+      "label" : "Restart",
+      "type" : "group"
     }
   ],
   "type" : "group"

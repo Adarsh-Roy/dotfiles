@@ -453,6 +453,10 @@ local function setup_gui_startup()
 			services_pane:send_text("open-df-services\n")
 			services_tab:set_title("nvim")
 
+			local services_claude_tab, services_claude_pane, _ = services_window:spawn_tab({})
+			services_claude_pane:send_text("open-df-services\n")
+			services_claude_tab:set_title("claude")
+
 			local services_server_tab, services_server_pane, _ = services_window:spawn_tab({})
 			services_server_pane:send_text("open-df-services\n")
 			services_server_tab:set_title("server")
