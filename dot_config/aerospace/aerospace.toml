@@ -220,6 +220,10 @@ if.app-id = 'com.apple.Safari.WebApp.A3EBF23F-F5E5-4353-A49A-CC88700F3952'
 run = 'move-node-to-workspace A'
 
 [[on-window-detected]]
+if.app-id = 'com.apple.Safari.WebApp.24FB4AEF-FA74-44B7-9C34-42313F426E13'
+run = 'move-node-to-workspace A'
+
+[[on-window-detected]]
 if.app-id = 'com.canva.affinity'
 run = 'move-node-to-workspace E'
 
