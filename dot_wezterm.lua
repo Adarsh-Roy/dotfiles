@@ -477,13 +477,13 @@ local function setup_gui_startup()
 
 			-- Create "ml-scripts" workspace
 			local ml_scripts_tab, ml_scripts_pane, ml_scripts_window = mux.spawn_window({ workspace = "ml-scripts" })
-			ml_scripts_pane:send_text("cd ~/Desktop/DF_Repos/df-clm-scripts\n")
+			ml_scripts_pane:send_text("cd ~/Dragonfruit/DF_Repos/df-clm-scripts\n")
 			ml_scripts_tab:set_title("nvim")
 
 			-- Create "ml-scripts" workspace
 			local ml_validation_tools_tab, ml_validation_tools_pane, ml_validation_tools_window =
 					mux.spawn_window({ workspace = "ml-validation-tools" })
-			ml_validation_tools_pane:send_text("cd ~/Desktop/DF_Repos/df-validation-tools\n")
+			ml_validation_tools_pane:send_text("cd ~/Dragonfruit/DF_Repos/df-validation-tools\n")
 			ml_validation_tools_tab:set_title("nvim")
 
 			-- Create "df-common" workspace
@@ -499,11 +499,11 @@ local function setup_gui_startup()
 
 			-- Create "df-client" workspace
 			local client_tab, client_pane, client_window = mux.spawn_window({ workspace = "df-client" })
-			client_pane:send_text("cd ~/Desktop/DF_Repos/df-client\n")
+			client_pane:send_text("cd ~/Dragonfruit/DF_Repos/df-client\n")
 			client_tab:set_title("nvim")
 
 			local client_term_tab, client_term_pane, _ = client_window:spawn_tab({})
-			client_term_pane:send_text("cd ~/Desktop/DF_Repos/df-client\n")
+			client_term_pane:send_text("cd ~/Dragonfruit/DF_Repos/df-client\n")
 			client_term_tab:set_title("term")
 
 			client_tab:activate()

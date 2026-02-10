@@ -76,6 +76,7 @@ function y() {
 alias lg='lazygit'
 alias lgc='lazygit -p "$HOME/.local/share/chezmoi"'
 alias cc='claude'
+alias vea='source .venv/bin/activate'
 
 
 
