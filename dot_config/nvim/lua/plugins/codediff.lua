@@ -9,3 +9,12 @@ return {
 		{ "<leader>gD", "<cmd>DiffviewClose<cr>", desc = "Diffview: Close" },
 	},
 }
+
+-- return {
+-- 	"esmuellert/codediff.nvim",
+-- 	dependencies = { "MunifTanjim/nui.nvim" },
+-- 	cmd = "CodeDiff",
+-- 	keys = {
+-- 		{ "<leader>gd", "<cmd>CodeDiff<cr>", desc = "CodeDiff: Open" },
+-- 	}
+-- }
