@@ -1,32 +1,32 @@
 #!/bin/bash
 
-TITLE="FLOATING_NOTES"
+TITLE="FLOATING_NOTES" # The window title we set in ../wezterm/floating_notes.lua
 HIDDEN_WS="N0TES"
 
-# Find the floating notes window by title (use tab separator to avoid awk issues)
+# Find the floating notes window by title
 WINDOW_ID=$(aerospace list-windows --all --format '%{window-id}%{tab}%{window-title}' \
     | grep "	${TITLE}$" \
     | cut -f1 \
     | head -1)
 
+# Check if the floating notes window is opened up, if not, open it and exit
 if [ -z "$WINDOW_ID" ]; then
     open -n /Applications/WezTerm.app --args --config-file "$HOME/.config/wezterm/floating_notes.lua"
     exit 0
 fi
 
-# Get workspace for this window
+# Get workspace for the floating notes window
 CURRENT_WS=$(aerospace list-windows --all --format '%{window-id}%{tab}%{workspace}' \
     | grep "^${WINDOW_ID}	" \
     | cut -f2)
 
 FOCUSED_WS=$(aerospace list-workspaces --focused)
 
-if [ "$CURRENT_WS" = "$HIDDEN_WS" ]; then
-    aerospace move-node-to-workspace --window-id "$WINDOW_ID" "$FOCUSED_WS"
-    aerospace focus --window-id "$WINDOW_ID"
-elif [ "$CURRENT_WS" = "$FOCUSED_WS" ]; then
+if [ "$CURRENT_WS" = "$FOCUSED_WS" ]; then
+    # It is currently here -> Hide it
     aerospace move-node-to-workspace --window-id "$WINDOW_ID" "$HIDDEN_WS"
 else
+    # It is NOT here (either hidden or on another screen) -> Summon it
     aerospace move-node-to-workspace --window-id "$WINDOW_ID" "$FOCUSED_WS"
     aerospace focus --window-id "$WINDOW_ID"
 fi

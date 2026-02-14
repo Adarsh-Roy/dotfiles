@@ -26,15 +26,14 @@ config.default_cwd = "/Users/adarsh/Obsidian/Dragonfruit/DragonfruitVault"
 
 config.default_prog = {
 	"/opt/homebrew/bin/nvim",
-	"--listen", "/tmp/nvim-floating-socket",
 	"-c", "Obsidian today"
 }
-
 config.window_decorations = "RESIZE"
 config.window_background_opacity = 0.95
 config.initial_cols = 55
 config.initial_rows = 45
 config.exit_behavior = "Close"
 config.enable_tab_bar = false
+config.font_size = 17
 
 return config
