@@ -130,6 +130,7 @@ automatically-unhide-macos-hidden-apps = true
     alt-s = 'workspace S' # Spotify
     alt-a = 'workspace A' # AI
     alt-e = 'workspace E' # Editig
+    alt-n = 'exec-and-forget $HOME/.config/aerospace/toggle-floating-notes.sh'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = ['move-node-to-workspace 1','workspace 1']
@@ -195,6 +196,13 @@ run = 'move-node-to-workspace C'
 if.app-id = 'com.openai.chat'
 run = 'move-node-to-workspace C'
 
+# Floating notes WezTerm — float it and send to current workspace (not D)
+[[on-window-detected]]
+if.app-id = 'com.github.wez.wezterm'
+if.window-title-regex-substring = 'FLOATING_NOTES'
+run = 'layout floating'
+
+# Regular WezTerm — send to D as before
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
 run = 'move-node-to-workspace D'
