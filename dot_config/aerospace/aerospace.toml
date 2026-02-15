@@ -245,5 +245,5 @@ run = 'move-node-to-workspace E'
 
 [[on-window-detected]]
 if.app-id = 'com.electron.wispr-flow'
-run = 'move-node-to-workspace WISPR'
+run = ['move-node-to-workspace HIDDEN', 'workspace-back-and-forth']
 

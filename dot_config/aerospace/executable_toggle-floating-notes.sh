@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TITLE="FLOATING_NOTES" # The window title we set in ../wezterm/floating_notes.lua
-HIDDEN_WS="N0TES"
+HIDDEN_WS="HIDDEN"
 
 # Find the floating notes window by title
 WINDOW_ID=$(aerospace list-windows --all --format '%{window-id}%{tab}%{window-title}' \
