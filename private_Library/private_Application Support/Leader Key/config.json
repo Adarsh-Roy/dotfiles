@@ -119,6 +119,12 @@
           "key" : "s",
           "type" : "application",
           "value" : "/System/Applications/System Settings.app"
+        },
+        {
+          "key" : "W",
+          "label" : "New Wezterm Window",
+          "type" : "command",
+          "value" : "open -n -a Wezterm"
         }
       ],
       "key" : "o",
