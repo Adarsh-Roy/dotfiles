@@ -11,3 +11,7 @@ private_Library
 {{- end }}
 
 TODO.md
+
+# Bootstrap scripts
+bootstrap.sh
+.install-scripts

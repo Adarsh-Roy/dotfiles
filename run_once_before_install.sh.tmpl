@@ -1,0 +1,61 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# Define colors (exported so modules can use them)
+export RED='\033[0;31m'
+export GREEN='\033[0;32m'
+export YELLOW='\033[1;33m'
+export BLUE='\033[0;34m'
+export NC='\033[0m'
+
+echo -e "${BLUE}╔════════════════════════════════════╗${NC}"
+echo -e "${BLUE}║  macOS Package Installation Script ║${NC}"
+echo -e "${BLUE}╚════════════════════════════════════╝${NC}"
+echo ""
+
+# Get the scripts directory
+SCRIPT_DIR="{{ .chezmoi.sourceDir }}/.install-scripts"
+
+# Execute installation modules in order
+echo -e "${BLUE}Running installation modules...${NC}\n"
+
+# 1. Homebrew CLI tools
+if [ -f "$SCRIPT_DIR/brew-cli.sh" ]; then
+  source "$SCRIPT_DIR/brew-cli.sh"
+fi
+
+# 2. Homebrew GUI applications
+if [ -f "$SCRIPT_DIR/brew-gui.sh" ]; then
+  source "$SCRIPT_DIR/brew-gui.sh"
+fi
+
+# 3. Other setup (shell, fonts, services)
+if [ -f "$SCRIPT_DIR/other-setup.sh" ]; then
+  source "$SCRIPT_DIR/other-setup.sh"
+fi
+
+echo ""
+echo -e "${BLUE}╔════════════════════════════════════╗${NC}"
+echo -e "${BLUE}║     Installation Complete!         ║${NC}"
+echo -e "${BLUE}╚════════════════════════════════════╝${NC}"
+echo ""
+echo -e "${YELLOW}Manual Steps Required:${NC}"
+echo ""
+echo -e "${YELLOW}1. Apps to install manually:${NC}"
+echo "   - Gemini: https://gemini.google.com/"
+echo "   - Affinity Designer (paid): https://affinity.serif.com/"
+echo "   - Vial: https://get.vial.today/"
+echo ""
+echo -e "${YELLOW}2. Configure installed apps:${NC}"
+echo "   - Raycast: Launch and install extensions, set hotkeys"
+echo "   - Karabiner: System Settings -> Privacy & Security -> Accessibility"
+echo "   - Aerospace/Borders: Already started via brew services"
+echo "   - Neovim: Launch to auto-install LSP servers via Mason"
+echo ""
+echo -e "${YELLOW}3. Sign in to applications:${NC}"
+echo "   - Chrome, Slack, Discord, WhatsApp, Zoom"
+echo "   - Obsidian (sync vault), Spotify, ChatGPT, Gemini"
+echo ""
+echo -e "${GREEN}Restart your terminal to apply all changes${NC}"
+{{- end -}}

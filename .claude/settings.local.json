@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(brew search:*)",
+      "Bash(brew info:*)",
+      "Bash(for app in mouseless arc chatgpt)",
+      "Bash(do echo \"=== $app ===\")",
+      "Bash(done)"
+    ]
+  }
+}
