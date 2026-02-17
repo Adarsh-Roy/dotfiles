@@ -125,6 +125,3 @@ notify() {
         say "Command failed"
     fi
 }
-
-# demo db for lazysql
-alias dbd='lazysql "sqlite:///Users/adarsh/Personal/Pengvim/demo_database.db"'
