@@ -22,12 +22,7 @@ wezterm.on('gui-startup', function(cmd)
 	gui:set_position(x, y)
 end)
 
-local vault_path = os.getenv("FLOATING_NOTES_VAULT") or (os.getenv("HOME") .. "/obsidian/floating_notes_vault")
-
--- Ensure the vault directory exists
-os.execute("mkdir -p " .. vault_path)
-
-config.default_cwd = vault_path
+config.default_cwd = "/Users/adarsh/Obsidian/Dragonfruit/DragonfruitVault"
 
 config.default_prog = {
 	"/opt/homebrew/bin/nvim",
