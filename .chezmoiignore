@@ -3,4 +3,11 @@ dot_config/hypr
 .config/hypr
 {{- end }}
 
+{{- if ne .chezmoi.os "darwin" }}
+dot_config/aerospace
+dot_config/borders
+dot_config/private_karabiner
+private_Library
+{{- end }}
+
 TODO.md
