@@ -303,6 +303,12 @@
           "label" : "Desktop Icons",
           "type" : "command",
           "value" : "zsh -lic toggledesktopicons"
+        },
+        {
+          "key" : "w",
+          "label" : "Wifi",
+          "type" : "command",
+          "value" : "networksetup -getairportpower en0 | grep \"On\" && networksetup -setairportpower en0 off || networksetup -setairportpower en0 on"
         }
       ],
       "key" : "t",
