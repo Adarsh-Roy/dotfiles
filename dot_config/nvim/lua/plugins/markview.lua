@@ -6,7 +6,4 @@ return {
 			enable = false
 		}
 	}
-
-	-- Completion for `blink.cmp`
-	-- dependencies = { "saghen/blink.cmp" },
-};
+}
