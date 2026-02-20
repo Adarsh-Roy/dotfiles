@@ -1,5 +1,6 @@
 return {
 	"sylvanfranklin/omni-preview.nvim",
+	dir = "/Users/adarsh/Personal/opensource/nvim/omni-preview.nvim",
 	lazy = true,
 	dependencies = {
 		-- Typst

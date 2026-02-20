@@ -186,6 +186,12 @@
           "label" : "Join Right",
           "type" : "command",
           "value" : "/opt/homebrew/bin/aerospace join-with right"
+        },
+        {
+          "key" : "r",
+          "label" : "Reset",
+          "type" : "command",
+          "value" : "/opt/homebrew/bin/aerospace layout floating tiling; /opt/homebrew/bin/aerospace layout floating tiling"
         }
       ],
       "key" : "w",
