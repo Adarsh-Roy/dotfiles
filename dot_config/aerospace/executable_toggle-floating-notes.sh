@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 TITLE="FLOATING_NOTES" # The window title we set in ../wezterm/floating_notes.lua
 HIDDEN_WS="HIDDEN"
 
