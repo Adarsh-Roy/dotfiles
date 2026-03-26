@@ -29,7 +29,12 @@ echo "  Development   : postman"
 echo "  Media         : spotify, obs"
 echo "  Typing        : thock"
 echo ""
-read -r -p "Install optional GUI apps? [y/N] " opt_response </dev/tty
+if [[ -t 0 ]]; then
+  read -r -p "Install optional GUI apps? [y/N] " opt_response </dev/tty
+else
+  echo -e "${YELLOW}[brew-gui]${NC} Non-interactive mode detected, skipping optional apps"
+  opt_response="n"
+fi
 if [[ "$opt_response" =~ ^[Yy]$ ]]; then
   echo -e "${BLUE}[brew-gui]${NC} Installing optional GUI applications..."
   brew bundle --verbose --file=/dev/stdin <<EOF

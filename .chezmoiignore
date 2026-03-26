@@ -12,6 +12,9 @@ private_Library
 
 TODO.md
 
+# Managed manually (multi-account SSH/git setup)
+dot_gitconfig
+
 # Bootstrap scripts
 bootstrap.sh
 .install-scripts
