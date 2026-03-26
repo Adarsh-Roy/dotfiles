@@ -5,7 +5,7 @@ Managed with [chezmoi](https://chezmoi.io). Dotfiles work cross-platform (macOS 
 ## One-liner setup (macOS)
 
 ```
-curl -fsSL "https://raw.githubusercontent.com/Adarsh-Roy/dotfiles/install-script/bootstrap.sh?$(date +%s)" | bash
+git clone -b install-script --depth 1 https://github.com/Adarsh-Roy/dotfiles.git /tmp/dotfiles-setup && bash /tmp/dotfiles-setup/bootstrap.sh ; rm -rf /tmp/dotfiles-setup
 ```
 
 Paste that into Terminal on a fresh Mac. It handles everything:
