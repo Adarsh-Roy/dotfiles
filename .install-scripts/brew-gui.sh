@@ -7,7 +7,7 @@
 echo -e "${BLUE}[brew-gui]${NC} Installing core GUI applications..."
 echo -e "${BLUE}[brew-gui]${NC} Core: wezterm, aerospace, karabiner, raycast, leader-key, mouseless, font-maple-mono-nf"
 
-brew bundle --no-lock --verbose --file=/dev/stdin <<EOF
+brew bundle --verbose --file=/dev/stdin <<EOF
 tap "nikitabobko/tap"
 cask "wezterm"
 cask "nikitabobko/tap/aerospace"
@@ -32,7 +32,7 @@ echo ""
 read -r -p "Install optional GUI apps? [y/N] " opt_response </dev/tty
 if [[ "$opt_response" =~ ^[Yy]$ ]]; then
   echo -e "${BLUE}[brew-gui]${NC} Installing optional GUI applications..."
-  brew bundle --no-lock --verbose --file=/dev/stdin <<EOF
+  brew bundle --verbose --file=/dev/stdin <<EOF
 cask "slack"
 cask "discord"
 cask "whatsapp"
