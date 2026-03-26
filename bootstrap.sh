@@ -43,7 +43,7 @@ echo -e "${BLUE}Applying dotfiles...${NC}"
 chezmoi init --force --apply --branch "$BRANCH" "$REPO"
 
 # ── 4. Run install scripts directly ──
-SCRIPT_DIR="$(chezmoi source-path)/.install-scripts"
+SCRIPT_DIR="$(dirname "$0")/.install-scripts"
 
 echo -e "${BLUE}Running install scripts...${NC}"
 source "$SCRIPT_DIR/brew-cli.sh"
