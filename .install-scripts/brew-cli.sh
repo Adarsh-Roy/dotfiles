@@ -1,29 +1,21 @@
 #!/bin/bash
 # Module: Homebrew CLI Tools (macOS only)
 
-[[ "$OSTYPE" != "darwin"* ]] && echo "brew-cli.sh: skipping (not macOS)" && return 0
+[[ "$OSTYPE" != "darwin"* ]] && echo -e "${YELLOW}[brew-cli] skipping (not macOS)${NC}" && return 0
 
-echo -e "${GREEN}Installing Homebrew CLI tools...${NC}"
+echo -e "${BLUE}[brew-cli]${NC} Installing Homebrew CLI tools..."
+echo -e "${BLUE}[brew-cli]${NC} Packages: git, git-lfs, git-delta, lazygit, neovim, yazi, zoxide, borders"
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
-# Taps
+brew bundle --no-lock --verbose --file=/dev/stdin <<EOF
 tap "felixkratz/formulae"
-
-# Version Control
 brew "git"
 brew "git-lfs"
 brew "git-delta"
 brew "lazygit"
-
-# Editors
 brew "neovim"
-
-# CLI Utilities
 brew "yazi"
 brew "zoxide"
-
-# Window Management (CLI companion for Borders)
 brew "felixkratz/formulae/borders"
 EOF
 
-echo -e "${GREEN}Homebrew CLI tools installed${NC}\n"
+echo -e "${GREEN}[brew-cli]${NC} All CLI tools installed"

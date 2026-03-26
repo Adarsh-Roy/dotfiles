@@ -1,34 +1,39 @@
 #!/bin/bash
 # Module: Other Setup (Shell, Services, etc.) - macOS only
 
-[[ "$OSTYPE" != "darwin"* ]] && echo "other-setup.sh: skipping (not macOS)" && return 0
+[[ "$OSTYPE" != "darwin"* ]] && echo -e "${YELLOW}[setup] skipping (not macOS)${NC}" && return 0
 
-echo -e "${GREEN}Running other setup tasks...${NC}"
+echo -e "${BLUE}[setup]${NC} Running other setup tasks..."
 
 # Oh My Zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  echo -e "${GREEN}  Installing Oh My Zsh...${NC}"
+  echo -e "${BLUE}[setup]${NC} Installing Oh My Zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  echo -e "${GREEN}[setup]${NC} Oh My Zsh installed"
 else
-  echo -e "${GREEN}  Oh My Zsh already installed${NC}"
+  echo -e "${GREEN}[setup]${NC} Oh My Zsh already installed"
 fi
 
 # Powerlevel10k theme
 P10K_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
 if [ ! -d "$P10K_DIR" ]; then
-  echo -e "${GREEN}  Installing Powerlevel10k theme...${NC}"
+  echo -e "${BLUE}[setup]${NC} Installing Powerlevel10k theme..."
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+  echo -e "${GREEN}[setup]${NC} Powerlevel10k installed"
 else
-  echo -e "${GREEN}  Powerlevel10k already installed${NC}"
+  echo -e "${GREEN}[setup]${NC} Powerlevel10k already installed"
 fi
 
 # Git LFS
-echo -e "${GREEN}  Configuring Git LFS...${NC}"
+echo -e "${BLUE}[setup]${NC} Configuring Git LFS..."
 git lfs install
+echo -e "${GREEN}[setup]${NC} Git LFS configured"
 
 # Start brew services
-echo -e "${GREEN}  Starting brew services...${NC}"
+echo -e "${BLUE}[setup]${NC} Starting aerospace service..."
 brew services start aerospace 2>/dev/null || true
+echo -e "${BLUE}[setup]${NC} Starting borders service..."
 brew services start borders 2>/dev/null || true
+echo -e "${GREEN}[setup]${NC} Brew services started"
 
-echo -e "${GREEN}Other setup complete${NC}\n"
+echo -e "${GREEN}[setup]${NC} All setup tasks complete"
