@@ -25,7 +25,7 @@ fi
 
 # chezmoi init + apply (installs chezmoi if needed)
 echo "Applying dotfiles..."
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --branch install-script "$REPO"
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --force --apply --branch install-script "$REPO"
 
 echo ""
 echo "Bootstrap complete! Restart your terminal to apply all changes."
