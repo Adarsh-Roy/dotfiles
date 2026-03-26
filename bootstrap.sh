@@ -23,9 +23,17 @@ else
   echo "Homebrew already installed"
 fi
 
-# chezmoi init + apply (installs chezmoi if needed)
+# chezmoi
+if ! command -v chezmoi &> /dev/null; then
+  echo "Installing chezmoi..."
+  brew install chezmoi
+else
+  echo "chezmoi already installed"
+fi
+
+# Init and apply dotfiles + run install scripts
 echo "Applying dotfiles..."
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --force --apply --branch install-script "$REPO"
+chezmoi init --force --apply --branch install-script "$REPO"
 
 echo ""
 echo "Bootstrap complete! Restart your terminal to apply all changes."
