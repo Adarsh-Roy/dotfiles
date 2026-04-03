@@ -374,6 +374,12 @@
           "label" : "Image",
           "type" : "url",
           "value" : "raycast://extensions/Aayush9029/screenshot/capture-to-clipboard"
+        },
+        {
+          "key" : "a",
+          "label" : "Android (adb)",
+          "type" : "command",
+          "value" : "zsh -lic snap"
         }
       ],
       "key" : "x",

@@ -1,7 +1,7 @@
 return {
 	-- dir = '/Users/adarsh/Developer/gthr.nvim',
 	'Adarsh-Roy/gthr.nvim',
-	version = 'v0.1.0',
+	version = 'v0.3.0',
 	cmd = { 'Gthr', 'GthrBuffersInteractive', 'GthrBuffersDirect' },
 	keys = {
 		{ '<leader>Go',  '<cmd>Gthr<cr>',                   desc = 'Open gthr' },

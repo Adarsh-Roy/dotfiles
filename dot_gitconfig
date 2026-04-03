@@ -1,31 +1,20 @@
-# ── Per-directory identity (conditional includes) ──
-[includeIf "gitdir:~/adarshroy/"]
-    path = ~/.gitconfig-adarshroy
+[user]
+	name = Adarsh-Roy-DF
+	email = adarsh.roy@dragonfruit.ai
 
-# Future: pengvim
-# [includeIf "gitdir:~/pengvim/"]
-#     path = ~/.gitconfig-pengvim
-
-# Future: ganitmath
-# [includeIf "gitdir:~/ganitmath/"]
-#     path = ~/.gitconfig-ganitmath
-
-# ── LFS ──
 [filter "lfs"]
     process = git-lfs filter-process
     required = true
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
 
-# ── Core ──
 [core]
     pager = delta --dark --paging=never
-    excludesfile = ~/.gitignore
+	excludesfile = /Users/adarsh/.gitignore
 
 [interactive]
     diffFilter = delta --color-only
 
-# ── Delta (Catppuccin Frappe theme) ──
 [delta]
     side-by-side = true
     navigate = true
@@ -50,10 +39,11 @@
     map-styles = bold purple => syntax "#574f6e", bold blue => syntax "#475270", bold cyan => syntax "#4a5b6b", bold yellow => syntax "#5d5958"
     line-numbers = true
 
-# ── Merge ──
 [merge]
     tool = nvimdiff
     conflictstyle = zdiff3
-
 [mergetool "nvimdiff"]
     layout = "LOCAL,BASE,REMOTE / MERGED"
+[safe]
+	directory = /Users/adarsh
+	directory = /Users/adarsh

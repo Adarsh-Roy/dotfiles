@@ -51,6 +51,7 @@ fi
 export PATH="/usr/local/opt/node@22/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
 
 # Neovim
 alias n='nvim'
@@ -72,11 +73,16 @@ function y() {
   rm -f -- "$tmp"
 }
 
+
+# Android Studio
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+
 # Misc. aliases
 alias lg='lazygit'
 alias lgc='lazygit -p "$HOME/.local/share/chezmoi"'
 alias cc='claude'
 alias vea='source .venv/bin/activate'
+alias mm='h-m-m'
 
 
 
@@ -124,4 +130,23 @@ notify() {
         osascript -e 'display notification "Command failed with error code '$exit_status'" with title "Terminal Failure"'
         say "Command failed"
     fi
+}
+
+snap() {
+  local adb_bin="$HOME/Library/Android/sdk/platform-tools/adb"
+  local dev=$($adb_bin devices | awk 'NR>1 && $2=="device" {print $1; exit}')
+  
+  if [ -z "$dev" ]; then
+    echo "No device found. Is WiFi debugging on?"
+    return 1
+  fi
+
+  # 1. Bypass noclobber with >|
+  $adb_bin -s "$dev" exec-out screencap -p >| /tmp/snap.png && \
+  sips -s format tiff /tmp/snap.png --out /tmp/snap.tiff &>/dev/null && \
+  osascript -e 'set the clipboard to (read (POSIX file "/tmp/snap.tiff") as TIFF picture)' && \
+  # 2. Bypass the rm alias with \rm -f
+  \rm -f /tmp/snap.png /tmp/snap.tiff
+  
+  echo "Copied to clipboard! 🚀"
 }

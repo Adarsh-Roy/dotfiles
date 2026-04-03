@@ -1,7 +1,6 @@
 #!/bin/bash
 
-
-TITLE="FLOATING_NOTES" # The window title we set in ../wezterm/floating_notes.lua
+TITLE="FLOATING_NOTES"
 HIDDEN_WS="HIDDEN"
 
 # Find the floating notes window by title
