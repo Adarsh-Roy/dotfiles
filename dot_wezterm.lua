@@ -1,11 +1,88 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+-- Lazy workspace layouts — spawned only the first time you switch in, not at startup.
+local function spawn_workspace_layout(name, tabs_spec)
+	local first_tab, first_pane, mux_win = wezterm.mux.spawn_window({ workspace = name })
+	first_tab:set_title(tabs_spec[1].title)
+	if tabs_spec[1].cmd then first_pane:send_text(tabs_spec[1].cmd .. "\n") end
+	for i = 2, #tabs_spec do
+		local t, p, _ = mux_win:spawn_tab({})
+		t:set_title(tabs_spec[i].title)
+		if tabs_spec[i].cmd then p:send_text(tabs_spec[i].cmd .. "\n") end
+	end
+	first_tab:activate()
+end
+
+local workspace_layouts = {}
+if wezterm.target_triple:find("apple%-darwin") then
+	workspace_layouts["notes-dragonfruit"] = function()
+		spawn_workspace_layout("notes-dragonfruit", {
+			{ title = "nvim", cmd = "open-df-notes" },
+		})
+	end
+	workspace_layouts["notes-professional"] = function()
+		spawn_workspace_layout("notes-professional", {
+			{ title = "nvim", cmd = "open-pro-notes" },
+		})
+	end
+	workspace_layouts["df-services"] = function()
+		spawn_workspace_layout("df-services", {
+			{ title = "nvim",   cmd = "open-df-services" },
+			{ title = "claude", cmd = "open-df-services" },
+			{ title = "server", cmd = "open-df-services" },
+			{ title = "db",     cmd = "open-df-services; make create-services-db; make connect-to-services-db" },
+			{ title = "alem",   cmd = "open-df-services" },
+			{ title = "term",   cmd = "open-df-services" },
+		})
+	end
+	workspace_layouts["ml-scripts"] = function()
+		spawn_workspace_layout("ml-scripts", {
+			{ title = "nvim", cmd = "cd ~/Dragonfruit/DF_Repos/df-clm-scripts" },
+		})
+	end
+	workspace_layouts["ml-validation-tools"] = function()
+		spawn_workspace_layout("ml-validation-tools", {
+			{ title = "nvim", cmd = "cd ~/Dragonfruit/DF_Repos/df-validation-tools" },
+		})
+	end
+	workspace_layouts["df-common"] = function()
+		spawn_workspace_layout("df-common", {
+			{ title = "nvim", cmd = "open-df-common" },
+			{ title = "term", cmd = "open-df-common" },
+		})
+	end
+	workspace_layouts["df-client"] = function()
+		spawn_workspace_layout("df-client", {
+			{ title = "nvim", cmd = "cd ~/Dragonfruit/DF_Repos/df-client" },
+			{ title = "term", cmd = "cd ~/Dragonfruit/DF_Repos/df-client" },
+		})
+	end
+	workspace_layouts["transport-service"] = function()
+		spawn_workspace_layout("transport-service", {
+			{ title = "nvim", cmd = "open-transport-service" },
+			{ title = "term", cmd = "open-transport-service" },
+		})
+	end
+end
+
 -- Helper functions for workspace switching with history tracking
 local function switch_workspace(window, pane, workspace)
 	local current_workspace = window:active_workspace()
 	if current_workspace == workspace then
 		return
+	end
+
+	-- Spawn this workspace's layout the first time we visit it
+	local exists = false
+	for _, ws in ipairs(wezterm.mux.get_workspace_names()) do
+		if ws == workspace then
+			exists = true
+			break
+		end
+	end
+	if not exists and workspace_layouts[workspace] then
+		workspace_layouts[workspace]()
 	end
 
 	window:perform_action(
@@ -27,6 +104,34 @@ local function switch_to_previous_workspace(window, pane)
 	end
 
 	switch_workspace(window, pane, workspace)
+end
+
+-- Kill every pane in a workspace. Switches away first if we're currently in it.
+-- Uses `wezterm cli kill-pane` with absolute path — wezterm's GUI children don't
+-- inherit shell PATH on macOS, so bare "wezterm" would silently fail to launch.
+local wezterm_bin = "/opt/homebrew/bin/wezterm"
+local function kill_workspace(window, pane, target)
+	if window:active_workspace() == target then
+		local go_to = wezterm.GLOBAL.previous_workspace
+		if go_to == nil or go_to == target then go_to = "default" end
+		switch_workspace(window, pane, go_to)
+	end
+
+	for _, mux_win in ipairs(wezterm.mux.all_windows()) do
+		if mux_win:get_workspace() == target then
+			for _, tab in ipairs(mux_win:tabs()) do
+				for _, p in ipairs(tab:panes()) do
+					local ok, _, stderr = wezterm.run_child_process({
+						wezterm_bin, "cli", "kill-pane",
+						"--pane-id", tostring(p:pane_id()),
+					})
+					if not ok then
+						wezterm.log_error("kill-pane failed: " .. (stderr or ""))
+					end
+				end
+			end
+		end
+	end
 end
 
 local function setup_font(cfg)
@@ -238,10 +343,16 @@ local function setup_keys(cfg)
 		{ key = "RightArrow", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
 		{ key = "UpArrow",    mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
 		{ key = "DownArrow",  mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
-		-- Toggle between current and previous workspace
+		-- Toggle between current and previous tab (within workspace)
 		{
 			key = "Tab",
 			mods = "LEADER",
+			action = wezterm.action.ActivateLastTab,
+		},
+		-- Toggle between current and previous workspace
+		{
+			key = "Tab",
+			mods = "LEADER|SHIFT",
 			action = wezterm.action_callback(function(window, pane)
 				switch_to_previous_workspace(window, pane)
 			end),
@@ -277,6 +388,40 @@ local function setup_keys(cfg)
 					end
 				end),
 			},
+		},
+		-- kill current workspace (with Y/N confirmation)
+		{
+			key = "X",
+			mods = "LEADER",
+			action = wezterm.action_callback(function(window, pane)
+				local target = window:active_workspace()
+				local prompt = "Kill workspace '" .. target .. "' ?"
+				local yes_label = wezterm.format({
+					{ Foreground = { AnsiColor = "Red" } },
+					{ Text = "[Y]" },
+					"ResetAttributes",
+					{ Text = "es" },
+				})
+				local no_label = "[N]o"
+				window:perform_action(
+					wezterm.action.InputSelector({
+						title = prompt,
+						description = prompt,
+						fuzzy_description = prompt,
+						alphabet = "ny",
+						choices = {
+							{ label = no_label,  id = "no" },
+							{ label = yes_label, id = "yes" },
+						},
+						action = wezterm.action_callback(function(win, p, id, _label)
+							if id == "yes" then
+								kill_workspace(win, p, target)
+							end
+						end),
+					}),
+					pane
+				)
+			end),
 		},
 		-- use a key table: leader + "w" activates the workspace table.
 		{
@@ -435,95 +580,7 @@ end
 local function setup_gui_startup()
 	wezterm.on("gui-startup", function()
 		local mux = wezterm.mux
-
-		-- Create "default" workspace
-		local default_tab, default_pane, default_window = mux.spawn_window({ workspace = "default" })
-
-		if wezterm.target_triple:find("apple%-darwin") then
-			-- Create "notes-dragonfruit" workspace
-			local df_notes_tab, df_notes_pane, df_notes_window = mux.spawn_window({ workspace = "notes-dragonfruit" })
-			df_notes_pane:send_text("open-df-notes\n")
-			df_notes_tab:set_title("nvim")
-
-			-- Create "notes-professional" workspace
-			local professional_notes_tab, professional_notes_pane, professional_notes_window =
-					mux.spawn_window({ workspace = "notes-professional" })
-			professional_notes_pane:send_text("open-pro-notes\n")
-			professional_notes_tab:set_title("nvim")
-
-			-- Create "df-services" workspace
-			local services_tab, services_pane, services_window = mux.spawn_window({ workspace = "df-services" })
-			services_pane:send_text("open-df-services\n")
-			services_tab:set_title("nvim")
-
-			local services_claude_tab, services_claude_pane, _ = services_window:spawn_tab({})
-			services_claude_pane:send_text("open-df-services\n")
-			services_claude_tab:set_title("claude")
-
-			local services_server_tab, services_server_pane, _ = services_window:spawn_tab({})
-			services_server_pane:send_text("open-df-services\n")
-			services_server_tab:set_title("server")
-
-			local services_db_tab, services_db_pane, _ = services_window:spawn_tab({})
-			services_db_pane:send_text("open-df-services; make create-services-db; make connect-to-services-db\n")
-			services_db_tab:set_title("db")
-
-			local services_alem_tab, services_alem_pane, _ = services_window:spawn_tab({})
-			services_alem_pane:send_text("open-df-services\n")
-			services_alem_tab:set_title("alem")
-
-			local services_term_tab, services_term_pane, _ = services_window:spawn_tab({})
-			services_term_pane:send_text("open-df-services\n")
-			services_term_tab:set_title("term")
-
-			services_tab:activate()
-
-			-- Create "ml-scripts" workspace
-			local ml_scripts_tab, ml_scripts_pane, ml_scripts_window = mux.spawn_window({ workspace = "ml-scripts" })
-			ml_scripts_pane:send_text("cd ~/Dragonfruit/DF_Repos/df-clm-scripts\n")
-			ml_scripts_tab:set_title("nvim")
-
-			-- Create "ml-scripts" workspace
-			local ml_validation_tools_tab, ml_validation_tools_pane, ml_validation_tools_window =
-					mux.spawn_window({ workspace = "ml-validation-tools" })
-			ml_validation_tools_pane:send_text("cd ~/Dragonfruit/DF_Repos/df-validation-tools\n")
-			ml_validation_tools_tab:set_title("nvim")
-
-			-- Create "df-common" workspace
-			local common_tab, common_pane, common_window = mux.spawn_window({ workspace = "df-common" })
-			common_pane:send_text("open-df-common\n")
-			common_tab:set_title("nvim")
-
-			local common_term_tab, common_term_pane, _ = common_window:spawn_tab({})
-			common_term_pane:send_text("open-df-common\n")
-			common_term_tab:set_title("term")
-
-			common_tab:activate()
-
-			-- Create "df-client" workspace
-			local client_tab, client_pane, client_window = mux.spawn_window({ workspace = "df-client" })
-			client_pane:send_text("cd ~/Dragonfruit/DF_Repos/df-client\n")
-			client_tab:set_title("nvim")
-
-			local client_term_tab, client_term_pane, _ = client_window:spawn_tab({})
-			client_term_pane:send_text("cd ~/Dragonfruit/DF_Repos/df-client\n")
-			client_term_tab:set_title("term")
-
-			client_tab:activate()
-
-			-- Create "transport-service" workspace
-			local transport_service_tab, transport_service_pane, transport_service_window =
-					mux.spawn_window({ workspace = "transport-service" })
-			transport_service_pane:send_text("open-transport-service\n")
-			transport_service_tab:set_title("nvim")
-
-			local transport_service_term_tab, transport_service_term_pane, _ = transport_service_window:spawn_tab({})
-			transport_service_term_pane:send_text("open-transport-service\n")
-			transport_service_term_tab:set_title("term")
-
-			transport_service_tab:activate()
-		end
-
+		mux.spawn_window({ workspace = "default" })
 		mux.set_active_workspace("default")
 	end)
 end
