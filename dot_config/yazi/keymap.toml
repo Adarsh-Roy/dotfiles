@@ -1,0 +1,15 @@
+# Yazi keymap overrides
+# Docs: https://yazi-rs.github.io/docs/configuration/keymap/
+
+# Copy selected (or hovered) file(s) to the macOS pasteboard as file
+# references — not just the path text — so they can be pasted into
+# Finder, WhatsApp, Mail, Slack, etc. Yazi's default `y` still yanks
+# inside Yazi. Works with Space-marked selection and V (visual)
+# selection — Yazi commits visual mode before running the shell.
+[[mgr.prepend_keymap]]
+on   = "<C-y>"
+run  = [
+  "shell -- /Users/adarsh/.config/yazi/scripts/copy-to-clipboard.sh %s",
+  "escape --select",
+]
+desc = "Copy file(s) to macOS clipboard (paste as file)"
