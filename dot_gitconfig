@@ -1,7 +1,3 @@
-[user]
-	name = Adarsh-Roy-DF
-	email = adarsh.roy@dragonfruit.ai
-
 [filter "lfs"]
     process = git-lfs filter-process
     required = true
@@ -47,3 +43,7 @@
 [safe]
 	directory = /Users/adarsh
 	directory = /Users/adarsh
+
+# Identity + SSH key are set by directory-based includes in this local, untracked file.
+[include]
+	path = ~/.gitconfig.local
