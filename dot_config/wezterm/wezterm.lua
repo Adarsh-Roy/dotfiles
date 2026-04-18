@@ -14,57 +14,9 @@ local function spawn_workspace_layout(name, tabs_spec)
 	first_tab:activate()
 end
 
+-- Registry of named workspace layouts. Populated by local/init.lua on machines
+-- that have project-specific layouts defined.
 local workspace_layouts = {}
-if wezterm.target_triple:find("apple%-darwin") then
-	workspace_layouts["notes-dragonfruit"] = function()
-		spawn_workspace_layout("notes-dragonfruit", {
-			{ title = "nvim", cmd = "open-df-notes" },
-		})
-	end
-	workspace_layouts["notes-professional"] = function()
-		spawn_workspace_layout("notes-professional", {
-			{ title = "nvim", cmd = "open-pro-notes" },
-		})
-	end
-	workspace_layouts["df-services"] = function()
-		spawn_workspace_layout("df-services", {
-			{ title = "nvim",   cmd = "open-df-services" },
-			{ title = "claude", cmd = "open-df-services" },
-			{ title = "server", cmd = "open-df-services" },
-			{ title = "db",     cmd = "open-df-services; make create-services-db; make connect-to-services-db" },
-			{ title = "alem",   cmd = "open-df-services" },
-			{ title = "term",   cmd = "open-df-services" },
-		})
-	end
-	workspace_layouts["ml-scripts"] = function()
-		spawn_workspace_layout("ml-scripts", {
-			{ title = "nvim", cmd = "cd ~/Dragonfruit/DF_Repos/df-clm-scripts" },
-		})
-	end
-	workspace_layouts["ml-validation-tools"] = function()
-		spawn_workspace_layout("ml-validation-tools", {
-			{ title = "nvim", cmd = "cd ~/Dragonfruit/DF_Repos/df-validation-tools" },
-		})
-	end
-	workspace_layouts["df-common"] = function()
-		spawn_workspace_layout("df-common", {
-			{ title = "nvim", cmd = "open-df-common" },
-			{ title = "term", cmd = "open-df-common" },
-		})
-	end
-	workspace_layouts["df-client"] = function()
-		spawn_workspace_layout("df-client", {
-			{ title = "nvim", cmd = "cd ~/Dragonfruit/DF_Repos/df-client" },
-			{ title = "term", cmd = "cd ~/Dragonfruit/DF_Repos/df-client" },
-		})
-	end
-	workspace_layouts["transport-service"] = function()
-		spawn_workspace_layout("transport-service", {
-			{ title = "nvim", cmd = "open-transport-service" },
-			{ title = "term", cmd = "open-transport-service" },
-		})
-	end
-end
 
 -- Helper functions for workspace switching with history tracking
 local function switch_workspace(window, pane, workspace)
@@ -199,8 +151,8 @@ end
 local function setup_tabs_status(cfg)
 	cfg.use_fancy_tab_bar = false
 
-	local LEFT_ARROW = ""
-	local RIGHT_ARROW = ""
+	local LEFT_ARROW = ""
+	local RIGHT_ARROW = ""
 
 	-- Format the individual tab
 	local function fancy_tab_format(tab, tabs, panes, config, hover, max_width)
@@ -459,96 +411,9 @@ local function setup_keys(cfg)
 	-- Font size via Leader (OS-agnostic)
 	table.insert(cfg.keys, { key = "f", mods = "LEADER", action = wezterm.action.ResetFontSize })
 
-	-- Define key tables for multi-key sequences.
-	-- Apple configuration
-	if wezterm.target_triple:find("apple%-darwin") then
-		cfg.key_tables = {
-			workspace = {
-				{
-					key = "b",
-					action = wezterm.action_callback(function(window, pane)
-						switch_workspace(window, pane, "df-services")
-					end),
-				},
-				{
-					key = "c",
-					action = wezterm.action_callback(function(window, pane)
-						switch_workspace(window, pane, "df-common")
-					end),
-				},
-				{
-					key = "f",
-					action = wezterm.action_callback(function(window, pane)
-						switch_workspace(window, pane, "df-client")
-					end),
-				},
-				{
-					key = "t",
-					action = wezterm.action.ActivateKeyTable({
-						name = "workspace_transport",
-						timeout_milliseconds = 2000,
-					}),
-				},
-				{
-					key = "n",
-					action = wezterm.action.ActivateKeyTable({
-						name = "workspace_notes",
-						timeout_milliseconds = 2000,
-					}),
-				},
-				{
-					key = "m",
-					action = wezterm.action.ActivateKeyTable({
-						name = "workspace_ml",
-						timeout_milliseconds = 2000,
-					}),
-				},
-				{ key = "Escape", action = wezterm.action.PopKeyTable },
-			},
-			workspace_transport = {
-				{
-					key = "s",
-					action = wezterm.action_callback(function(window, pane)
-						switch_workspace(window, pane, "transport-service")
-					end),
-				},
-				{ key = "Escape", action = wezterm.action.PopKeyTable },
-			},
-			workspace_notes = {
-				{
-					key = "d",
-					action = wezterm.action_callback(function(window, pane)
-						switch_workspace(window, pane, "notes-dragonfruit")
-					end),
-				},
-				{
-					key = "p",
-					action = wezterm.action_callback(function(window, pane)
-						switch_workspace(window, pane, "notes-professional")
-					end),
-				},
-				{ key = "Escape", action = wezterm.action.PopKeyTable },
-			},
-			workspace_ml = {
-				{
-					key = "s",
-					action = wezterm.action_callback(function(window, pane)
-						switch_workspace(window, pane, "ml-scripts")
-					end),
-				},
-				{
-					key = "v",
-					action = wezterm.action_callback(function(window, pane)
-						switch_workspace(window, pane, "ml-validation-tools")
-					end),
-				},
-				{ key = "Escape", action = wezterm.action.PopKeyTable },
-			},
-		}
-	end
-
-	-- default workspaces with no tabs or pans configuration
-	cfg.key_tables = cfg.key_tables or { workspace = {} }
+	-- Generic workspace key table: WS1..WS4, default, Escape.
+	-- local/init.lua extends this with project-specific bindings.
+	cfg.key_tables = { workspace = {} }
 	for i = 1, 4 do
 		table.insert(cfg.key_tables.workspace, {
 			key = tostring(i),
@@ -563,6 +428,7 @@ local function setup_keys(cfg)
 			switch_workspace(window, pane, "default")
 		end),
 	})
+	table.insert(cfg.key_tables.workspace, { key = "Escape", action = wezterm.action.PopKeyTable })
 end
 
 local function setup_window(cfg)
@@ -591,6 +457,23 @@ setup_tabs_status(config)
 setup_keys(config)
 setup_window(config)
 setup_gui_startup()
+
+-- Load optional local (work/machine-specific) config if present.
+-- `local/init.lua` is gitignored via .chezmoiignore so company-specific
+-- bindings and paths stay out of the dotfiles repo.
+local local_init_path = wezterm.config_dir .. "/local/init.lua"
+local f = io.open(local_init_path, "r")
+if f then
+	f:close()
+	local local_mod = require("local.init")
+	if type(local_mod) == "table" and type(local_mod.setup) == "function" then
+		local_mod.setup(config, {
+			spawn_workspace_layout = spawn_workspace_layout,
+			switch_workspace = switch_workspace,
+			workspace_layouts = workspace_layouts,
+		})
+	end
+end
 
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = false

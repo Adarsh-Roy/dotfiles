@@ -1,3 +1,7 @@
+# Machine/work-specific config — any directory named "local" is skipped.
+# Convention: put untracked per-machine bits under a local/ subdir of the tool's config.
+local/
+
 {{- if ne .chezmoi.os "linux" }}
 dot_config/hypr
 .config/hypr
