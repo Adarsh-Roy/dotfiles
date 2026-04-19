@@ -125,6 +125,23 @@
           "label" : "New Wezterm Window",
           "type" : "command",
           "value" : "open -n -a Wezterm"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "b",
+              "type" : "command",
+              "value" : "~/.config/kitty/apps/btop.sh"
+            },
+            {
+              "key" : "c",
+              "type" : "command",
+              "value" : "~/.config/kitty/apps/claude.sh"
+            }
+          ],
+          "key" : "t",
+          "label" : "TUIs",
+          "type" : "group"
         }
       ],
       "key" : "o",
@@ -325,13 +342,13 @@
       "actions" : [
         {
           "key" : "d",
-          "type" : "folder",
-          "value" : "/Users/adarsh/Downloads"
+          "type" : "command",
+          "value" : "~/.config/kitty/apps/yazi-downloads.sh"
         },
         {
-          "key" : "D",
-          "type" : "folder",
-          "value" : "/Users/adarsh/Desktop"
+          "key" : "r",
+          "type" : "command",
+          "value" : "~/.config/kitty/apps/yazi-root.sh"
         },
         {
           "key" : "m",
@@ -340,7 +357,7 @@
         }
       ],
       "key" : "f",
-      "label" : "Finder",
+      "label" : "Folder",
       "type" : "group"
     },
     {

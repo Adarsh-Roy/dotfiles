@@ -1,0 +1,22 @@
+. "$HOME/.cargo/env"
+
+alias assume=". assume"
+
+export FLOATING_NOTES_VAULT="/Users/adarsh/Obsidian/Dragonfruit/DragonfruitVault"
+
+# ─── PATH & EDITOR (.zshenv so non-interactive shells get them too) ──────────
+# .zshenv is sourced by every zsh invocation; .zshrc is only for interactive
+# shells. Putting PATH additions and EDITOR here means scripts, cron jobs, and
+# `zsh -c` subshells (used by our kitty TUI launchers) all see them.
+#
+# typeset -U auto-dedupes PATH entries so re-exporting the same paths from
+# .zshrc is a no-op instead of producing duplicates.
+typeset -U path PATH
+
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+
+export EDITOR='nvim'
+export VISUAL='nvim'

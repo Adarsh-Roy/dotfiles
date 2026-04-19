@@ -109,6 +109,10 @@ automatically-unhide-macos-hidden-apps = true
     alt-shift-l = 'move right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
+    # `smart` adapts to the parent container's orientation (great for tiled
+    # windows). Floating windows can't be resized via aerospace keybindings
+    # yet — see upstream issue #9. Use mouse drag on floating windows until
+    # that lands.
     alt-minus = 'resize smart -50'
     alt-equal = 'resize smart +50'
     alt-shift-minus = 'resize smart-opposite -50'
@@ -246,4 +250,11 @@ run = 'move-node-to-workspace E'
 [[on-window-detected]]
 if.app-id = 'com.electron.wispr-flow'
 run = ['move-node-to-workspace HIDDEN', 'workspace-back-and-forth']
+
+# Standalone TUI apps — any Kitty window whose title contains _TUI_APP floats.
+# Launcher scripts live at ~/.config/kitty/apps/*.sh and set titles like BTOP_TUI_APP.
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.kitty'
+if.window-title-regex-substring = '_TUI_APP'
+run = 'layout floating'
 
