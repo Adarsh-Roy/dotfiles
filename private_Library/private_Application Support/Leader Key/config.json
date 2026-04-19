@@ -137,6 +137,11 @@
               "key" : "c",
               "type" : "command",
               "value" : "~/.config/kitty/apps/claude.sh"
+            },
+            {
+              "key" : "d",
+              "type" : "command",
+              "value" : "~/.config/kitty/apps/lazydocker.sh"
             }
           ],
           "key" : "t",

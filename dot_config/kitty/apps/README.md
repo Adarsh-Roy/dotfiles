@@ -16,6 +16,17 @@ Single-purpose Kitty windows that behave like dedicated macOS apps (floating, no
 
 3. In Leader Key, map a chord (e.g., `t <letter>`) to run the script.
 
+4. Sync to chezmoi:
+
+   ```bash
+   chezmoi add ~/.config/kitty/apps/<name>.sh
+   chezmoi re-add "$HOME/Library/Application Support/Leader Key/config.json"
+   chezmoi diff  # should print nothing
+   ```
+
+   - `chezmoi add` — for a **new** file chezmoi doesn't track yet.
+   - `chezmoi re-add` — for a file **already tracked**, picking up your latest edits. Use this after editing an existing launcher or the Leader Key config.
+
 That's it. No Aerospace changes — the rule in `aerospace.toml` floats anything whose Kitty window title contains `_TUI_APP`.
 
 ## What `_launch.sh` does
