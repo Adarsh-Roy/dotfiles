@@ -337,6 +337,19 @@
           "label" : "Wifi",
           "type" : "command",
           "value" : "networksetup -getairportpower en0 | grep \"On\" && networksetup -setairportpower en0 off || networksetup -setairportpower en0 on"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "n",
+              "label" : "Notify Mode",
+              "type" : "command",
+              "value" : "~/.claude/toggle-notify-mode.sh"
+            }
+          ],
+          "key" : "c",
+          "label" : "Claude",
+          "type" : "group"
         }
       ],
       "key" : "t",

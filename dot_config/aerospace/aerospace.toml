@@ -134,6 +134,7 @@ automatically-unhide-macos-hidden-apps = true
     alt-s = 'workspace S' # Spotify
     alt-a = 'workspace A' # AI
     alt-e = 'workspace E' # Editig
+    alt-g = 'workspace G' # Gaming
     alt-n = 'exec-and-forget $HOME/.config/aerospace/toggle-floating-notes.sh'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
@@ -148,6 +149,7 @@ automatically-unhide-macos-hidden-apps = true
     alt-shift-s = ['move-node-to-workspace S', 'workspace S']
     alt-shift-a = ['move-node-to-workspace A', 'workspace A']
     alt-shift-e = ['move-node-to-workspace E', 'workspace E']
+    alt-shift-g = ['move-node-to-workspace G', 'workspace G']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
@@ -250,6 +252,11 @@ run = 'move-node-to-workspace E'
 [[on-window-detected]]
 if.app-id = 'com.electron.wispr-flow'
 run = ['move-node-to-workspace HIDDEN', 'workspace-back-and-forth']
+
+# IINA — float it.
+[[on-window-detected]]
+if.app-id = 'com.colliderli.iina'
+run = 'layout floating'
 
 # Standalone TUI apps — any Kitty window whose title contains _TUI_APP floats.
 # Launcher scripts live at ~/.config/kitty/apps/*.sh and set titles like BTOP_TUI_APP.

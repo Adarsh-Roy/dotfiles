@@ -18,7 +18,60 @@ end
 -- that have project-specific layouts defined.
 local workspace_layouts = {}
 
--- Helper functions for workspace switching with history tracking
+-- Helper functions for workspace switching with history tracking.
+--
+-- We keep a recency-ordered stack of visited workspaces in wezterm.GLOBAL
+-- (most-recent first, deduplicated) rather than a single "previous" slot.
+-- A single slot can't skip past a workspace that was killed since we left it,
+-- which is exactly what "go to previous workspace" must do — otherwise it
+-- would try to reactivate a dead workspace and respawn its layout.
+local function record_workspace_visit(ws)
+	if ws == nil then
+		return
+	end
+	local hist = wezterm.GLOBAL.workspace_history or {}
+	local new = { ws }
+	for _, w in ipairs(hist) do
+		if w ~= ws then
+			table.insert(new, w)
+		end
+	end
+	-- Keep it bounded; we never need deep history.
+	while #new > 16 do
+		table.remove(new)
+	end
+	wezterm.GLOBAL.workspace_history = new
+end
+
+-- Most recently visited workspace that is *currently alive* (skipping `exclude`
+-- and any workspaces that have since been killed). Falls back to any live
+-- workspace (preferring "default"), or nil if none exist.
+local function most_recent_live_workspace(exclude)
+	local live = {}
+	for _, ws in ipairs(wezterm.mux.get_workspace_names()) do
+		if ws ~= exclude then
+			live[ws] = true
+		end
+	end
+
+	local hist = wezterm.GLOBAL.workspace_history or {}
+	for _, ws in ipairs(hist) do
+		if live[ws] then
+			return ws
+		end
+	end
+
+	-- Nothing in history is still alive; fall back to any live workspace.
+	local fallback = nil
+	for ws in pairs(live) do
+		fallback = ws
+		if ws == "default" then
+			break
+		end
+	end
+	return fallback
+end
+
 local function switch_workspace(window, pane, workspace)
 	local current_workspace = window:active_workspace()
 	if current_workspace == workspace then
@@ -44,18 +97,21 @@ local function switch_workspace(window, pane, workspace)
 		pane
 	)
 
-	wezterm.GLOBAL.previous_workspace = current_workspace
+	record_workspace_visit(current_workspace)
 end
 
+-- Go to the most recently visited workspace that is still alive. Never respawns
+-- a killed workspace: if the last workspace we left has since been killed, this
+-- skips it and lands on the next most-recent live one.
 local function switch_to_previous_workspace(window, pane)
 	local current_workspace = window:active_workspace()
-	local workspace = wezterm.GLOBAL.previous_workspace
+	local target = most_recent_live_workspace(current_workspace)
 
-	if current_workspace == workspace or wezterm.GLOBAL.previous_workspace == nil then
+	if target == nil or target == current_workspace then
 		return
 	end
 
-	switch_workspace(window, pane, workspace)
+	switch_workspace(window, pane, target)
 end
 
 -- Kill every pane in a workspace. Switches away first if we're currently in it.
@@ -64,8 +120,11 @@ end
 local wezterm_bin = "/opt/homebrew/bin/wezterm"
 local function kill_workspace(window, pane, target)
 	if window:active_workspace() == target then
-		local go_to = wezterm.GLOBAL.previous_workspace
-		if go_to == nil or go_to == target then go_to = "default" end
+		-- Switch to the most-recent live workspace (never the target we're about
+		-- to kill), so we don't re-spawn a registered layout for it.
+		local go_to = most_recent_live_workspace(target)
+		if go_to == nil then go_to = "default" end
+
 		switch_workspace(window, pane, go_to)
 	end
 

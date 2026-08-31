@@ -2,3 +2,5 @@ pyrightconfig.json
 Session.vim
 .goosehints
 ty.toml
+
+**/.claude/settings.local.json
