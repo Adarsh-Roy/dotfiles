@@ -13,3 +13,14 @@ run  = [
   "escape --select",
 ]
 desc = "Copy file(s) to macOS clipboard (paste as file)"
+
+# Second way to open the hovered/selected file(s). `o` keeps Yazi's normal
+# behaviour; this sends them to alt-open.sh, which picks the app per file
+# extension (HTML -> browser, everything unlisted -> macOS default app).
+[[mgr.prepend_keymap]]
+on   = "<C-o>"
+run  = [
+  "shell -- /Users/adarsh/.config/yazi/scripts/alt-open.sh %s",
+  "escape --select",
+]
+desc = "Open with alternate app (per file type)"

@@ -1,0 +1,38 @@
+# Yazi opener overrides
+# Docs: https://yazi-rs.github.io/docs/configuration/yazi/#opener
+#
+# Yazi's built-in rules send anything matching `text/*` to $EDITOR, which is
+# why HTML files were opening as source in nvim instead of in a browser.
+#
+# Only the `browser` opener is defined here. Yazi's own `edit`, `open`,
+# `play` and `reveal` openers are left alone — they already do the right
+# thing on macOS, and redefining them just risks getting them wrong.
+#
+# Placeholders follow this Yazi version's convention (26.x):
+#   %s   all selected files
+#   %s1  the first selected file
+#   %d1  the first selected file's directory
+#
+# How the three keys differ:
+#   o      -> first opener in the matching rule below
+#   O      -> interactive menu listing every opener in that rule
+#   <C-o>  -> scripts/alt-open.sh (see keymap.toml), a per-extension table
+
+[opener]
+
+# Named explicitly rather than relying on the macOS default handler for
+# .html, which any app can quietly take over by asking to be the default.
+browser = [
+  { run = 'open -a "Arc" %s', desc = "Open in browser", for = "macos" },
+]
+
+[open]
+
+# prepend_rules is consulted before Yazi's built-in rules, so these win over
+# the default `text/*` -> edit mapping without replacing the rest of it.
+# `edit` stays first so plain `o` behaves exactly as it does today.
+prepend_rules = [
+  { url = "*.html", use = [ "edit", "browser", "reveal" ] },
+  { url = "*.htm",  use = [ "edit", "browser", "reveal" ] },
+  { url = "*.svg",  use = [ "edit", "browser", "reveal" ] },
+]
