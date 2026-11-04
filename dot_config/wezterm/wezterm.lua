@@ -72,6 +72,29 @@ local function most_recent_live_workspace(exclude)
 	return fallback
 end
 
+-- Record every workspace change, however it happened. switch_workspace() records its own
+-- switches, but the fuzzy workspace picker (leader space), the new-workspace prompt, `wezterm
+-- cli` spawns and other modules switch directly. Without this, "previous workspace" skips the
+-- one you just left and lands on an older one. Runs on every status update and before
+-- "go to previous", per GUI window.
+local function sync_workspace_history(window)
+	local current = window:active_workspace()
+	local key = tostring(window:window_id())
+	local seen = wezterm.GLOBAL.last_seen_workspace or {}
+	local last = seen[key]
+	if last ~= current then
+		if last ~= nil then
+			record_workspace_visit(last)
+		end
+		seen[key] = current
+		wezterm.GLOBAL.last_seen_workspace = seen
+	end
+end
+
+wezterm.on("update-status", function(window, _)
+	sync_workspace_history(window)
+end)
+
 local function switch_workspace(window, pane, workspace)
 	local current_workspace = window:active_workspace()
 	if current_workspace == workspace then
@@ -104,6 +127,7 @@ end
 -- a killed workspace: if the last workspace we left has since been killed, this
 -- skips it and lands on the next most-recent live one.
 local function switch_to_previous_workspace(window, pane)
+	sync_workspace_history(window) -- catch a switch made since the last status update
 	local current_workspace = window:active_workspace()
 	local target = most_recent_live_workspace(current_workspace)
 
