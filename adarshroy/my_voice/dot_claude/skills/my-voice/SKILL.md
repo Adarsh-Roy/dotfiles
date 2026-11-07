@@ -36,11 +36,14 @@ Transcribe the WAV and compare it with the script:
 ```
 ~/adarshroy/my_voice/.venv/bin/python -c "import sys,torch; from transformers import pipeline; p=pipeline('automatic-speech-recognition','openai/whisper-large-v3-turbo',device='mps',dtype=torch.float32); print(p(sys.argv[1],generate_kwargs={'language':'en'})['text'])" file.wav
 ```
-Tool names are the words most likely to come out wrong. Respell them in the text file and regenerate:
+Tool names are the words most likely to come out wrong. Whisper's spelling is not the pronunciation.
+"present term" for presenterm is the right sound, spelled oddly. Only respell when the *sound* is
+wrong, and ask Adarsh how a name is said when you're unsure, instead of guessing from the transcript.
+Respell in the text file and regenerate:
 
 | Write | Not | Why |
 |---|---|---|
-| `presenter M` | `presenterm` | as written, it comes out as "present term"; "presenter-em" merges into the next word ("presenter, I'm showing") |
+| `presen-term` | `presenterm` | Adarsh says "presen-term". Don't end a sentence on it: there the voice clips it to "presenter". "presenter M" is wrong |
 | `wez term` | `WezTerm` | |
 | `cat-poo-chin` | `catppuccin` | |
 | `tokyo night` | `tokyonight` | |
