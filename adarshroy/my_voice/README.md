@@ -13,6 +13,10 @@ per minute of speech on an M3 Pro (18 GB). `my_voice` is an alias in `~/.zshrc`.
 Emotion tags like `[laughter]` or `[sigh]` are accepted but currently sound like breathy
 pauses, so plain text with normal punctuation works best.
 
+Claude sessions use this through the `my-voice` skill (`.claude/skills/my-voice/SKILL.md` here,
+linked from `~/.claude/skills/my-voice`). The skill covers how to write text that speaks well
+and how to check the result.
+
 ## What lives where
 
 Only this README and the `my_voice` script are in the public dotfiles repo. The rest
