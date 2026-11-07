@@ -43,7 +43,7 @@ Respell in the text file and regenerate:
 
 | Write | Not | Why |
 |---|---|---|
-| `presen-term` | `presenterm` | Adarsh says "presen-term". Don't end a sentence on it: there the voice clips it to "presenter". "presenter M" is wrong |
+| `present-term` | `presenterm` | Adarsh says "presen-term"; "presen-term" still came out wrong, "present-term" works. Don't end a sentence on it (the voice clips it to "presenter"). "presenter M" is wrong |
 | `wez term` | `WezTerm` | |
 | `cat-poo-chin` | `catppuccin` | |
 | `tokyo night` | `tokyonight` | |
