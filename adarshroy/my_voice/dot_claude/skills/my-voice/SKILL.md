@@ -40,7 +40,12 @@ Tool names are the words most likely to come out wrong. Respell them in the text
 
 | Write | Not | Why |
 |---|---|---|
-| `presenter-em` | `presenterm` | as written, it comes out as "present term" |
+| `presenter M` | `presenterm` | as written, it comes out as "present term"; "presenter-em" merges into the next word ("presenter, I'm showing") |
+| `wez term` | `WezTerm` | |
+| `cat-poo-chin` | `catppuccin` | |
+| `tokyo night` | `tokyonight` | |
+
+Keep the real spelling in captions: the caption text comes from the script, not from the voice file.
 
 ## Common mistakes
 - Calling the bare alias `my_voice` from a non-interactive shell gives "command not found". Use the full path.
