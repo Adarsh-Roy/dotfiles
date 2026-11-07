@@ -46,7 +46,7 @@ speech that sounds like me.
 3. Log in to Hugging Face and download the private model files into this folder:
    ```
    .venv/bin/hf auth login
-   .venv/bin/hf download HF_USER/my-voice --local-dir ~/adarshroy/my_voice
+   .venv/bin/hf download adxrsh/my-voice --local-dir ~/adarshroy/my_voice
    ```
    The two model folders link to the shared `models/audio_tokenizer` through
    `models/voice_v*/audio_tokenizer -> ../audio_tokenizer`. Recreate those links if a
