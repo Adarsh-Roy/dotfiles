@@ -81,6 +81,8 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
 alias lg='lazygit'
 alias lgc='lazygit -p "$HOME/.local/share/chezmoi"'
 alias cc='claude'
+alias cx='codex'
+alias my_voice="$HOME/adarshroy/my_voice/my_voice"
 alias vea='source .venv/bin/activate'
 alias mm='h-m-m'
 

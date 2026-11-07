@@ -1,0 +1,31 @@
+#!/bin/bash
+# my_voice: turn a text file into speech in Adarsh's trained voice, fully offline.
+#   my_voice script.txt          -> writes script.wav next to script.txt (voice version 2)
+#   my_voice -v1 script.txt      -> same, using voice version 1
+# Paths can be relative to where you are, or absolute. ~1.5 min per minute of speech on an M3 Pro.
+# Setup on a new machine: see README.md in this folder.
+set -euo pipefail
+
+HERE="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+VERSION=v2
+if [[ "${1:-}" == "-v1" || "${1:-}" == "-v2" ]]; then VERSION=${1#-}; shift; fi
+if [[ $# -ne 1 ]]; then
+  echo "usage: my_voice [-v1|-v2] <file.txt>" >&2; exit 2
+fi
+TXT="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"   # resolve against the caller's directory
+[[ -f "$TXT" ]] || { echo "my_voice: no such file: $1" >&2; exit 1; }
+[[ -s "$TXT" ]] || { echo "my_voice: file is empty: $1" >&2; exit 1; }
+OUT="${TXT%.*}.wav"
+MODEL="$HERE/models/voice_$VERSION"
+[[ -d "$MODEL" ]] || { echo "my_voice: model missing at $MODEL (see README.md)" >&2; exit 1; }
+
+# Transcript of ref/me_ref.wav, the 10 s clip that sets tone and recording style.
+REF_TEXT="You need your wrists to be at a good angle, not parallel to the ground. And you need your wrists to be at a comfortable distance. Now, none of this is possible with a laptop keyboard."
+
+start=$SECONDS
+HF_HUB_OFFLINE=1 "$HERE/.venv/bin/omnivoice-infer" --model "$MODEL" --device mps --language en \
+  --text "$(cat "$TXT")" --ref_audio "$HERE/ref/me_ref.wav" --ref_text "$REF_TEXT" \
+  --output "$OUT" 2>&1 | grep -iE "error|traceback" >&2 || true
+[[ -f "$OUT" && "$OUT" -nt "$TXT" ]] || { echo "my_voice: generation failed, no audio written" >&2; exit 1; }
+secs=$("$HERE/.venv/bin/python" -c "import soundfile,sys; print(round(soundfile.info(sys.argv[1]).duration,1))" "$OUT")
+echo "wrote $OUT (${secs}s of audio, voice $VERSION, took $((SECONDS - start))s)"
